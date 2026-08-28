@@ -13,8 +13,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Mon Portfolio - Présentation personnelle",
-  description: "Portfolio personnel présentant mes compétences, projets et centres d'intérêt",
+  title: "Alban Richer - Lead Full Stack Developer",
+  description: "Portfolio d'Alban Richer, Lead Full Stack Developer chez Deemply, spécialisé dans le développement d'applications web modernes et les solutions immobilières innovantes.",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
