@@ -17,16 +17,27 @@ export default function Home() {
       <section id="about" className="pt-32 pb-20 px-4">
         <div className="max-w-4xl mx-auto">
           <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-8 md:p-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-6">À propos de moi</h2>
-            <p className="text-lg text-gray-700 dark:text-gray-300 leading-relaxed mb-4">
-              Lead Full Stack Developer chez Deemply, spécialisé dans le développement d'applications web modernes et performantes. Je conçois et développe des solutions techniques innovantes pour la gestion de bâtiments et les services immobiliers.
-            </p>
-            <p className="text-lg text-gray-700 dark:text-gray-300 leading-relaxed mb-4">
-              Avec plus de 6 ans d'expérience en développement full stack, j'expertise les technologies front-end et back-end pour créer des expériences utilisateur fluides et des architectures robustes. Je suis passionné par l'innovation technologique et l'amélioration continue des processus de développement.
-            </p>
-            <p className="text-lg text-gray-700 dark:text-gray-300 leading-relaxed">
-              Basé dans la région Pays de la Loire, je travaille au sein d'une équipe dynamique pour transformer le secteur immobilier grâce à des solutions numériques innovantes.
-            </p>
+            <div className="flex flex-col md:flex-row gap-8 items-center md:items-start">
+              <div className="w-32 h-32 md:w-48 md:h-48 rounded-full overflow-hidden shadow-lg flex-shrink-0">
+                <img
+                  src="/alban-richer.jpg"
+                  alt="Alban Richer"
+                  className="w-full h-full object-cover"
+                />
+              </div>
+              <div className="flex-1">
+                <h2 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-6">À propos de moi</h2>
+                <p className="text-lg text-gray-700 dark:text-gray-300 leading-relaxed mb-4">
+                  Lead Full Stack Developer chez Deemply, spécialisé dans le développement d'applications web modernes et performantes. Je conçois et développe des solutions techniques innovantes pour la gestion de bâtiments et les services immobiliers.
+                </p>
+                <p className="text-lg text-gray-700 dark:text-gray-300 leading-relaxed mb-4">
+                  Avec plus de 6 ans d'expérience en développement full stack, j'expertise les technologies front-end et back-end pour créer des expériences utilisateur fluides et des architectures robustes. Je suis passionné par l'innovation technologique et l'amélioration continue des processus de développement.
+                </p>
+                <p className="text-lg text-gray-700 dark:text-gray-300 leading-relaxed">
+                  Basé dans la région Pays de la Loire, je travaille au sein d'une équipe dynamique pour transformer le secteur immobilier grâce à des solutions numériques innovantes.
+                </p>
+              </div>
+            </div>
           </div>
         </div>
       </section>
@@ -36,8 +47,19 @@ export default function Home() {
           <h2 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-8 text-center">Expérience Professionnelle</h2>
           <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-8 md:p-12">
             <div className="mb-8">
-              <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">Lead Full Stack Developer</h3>
-              <p className="text-lg text-blue-600 dark:text-blue-400 font-semibold mb-4">Deemply • Mars 2020 - Présent (6 ans)</p>
+              <div className="flex items-center gap-4 mb-4">
+                <div className="w-16 h-16 rounded-lg overflow-hidden flex-shrink-0">
+                  <img
+                    src="/deemply_logo.jpeg"
+                    alt="Deemply Logo"
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+                <div>
+                  <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-1">Lead Full Stack Developer</h3>
+                  <p className="text-lg text-blue-600 dark:text-blue-400 font-semibold">Deemply • Mars 2020 - Présent (6 ans)</p>
+                </div>
+              </div>
               
               <div className="mb-6">
                 <h4 className="text-xl font-semibold text-gray-900 dark:text-white mb-3">🏢 Entreprise</h4>
@@ -45,7 +67,7 @@ export default function Home() {
                   <strong>Deemply</strong> est une entreprise technologique fondée en 2012, spécialisée dans la dématérialisation des registres de sécurité et la conformité digitale pour les bâtiments. Basée à La Roche-sur-Yon, l'entreprise compte 10-20 employés et dispose d'une équipe R&D de 9 développeurs.
                 </p>
                 <p className="text-gray-700 dark:text-gray-300 leading-relaxed">
-                  L'entreprise développe en interne l'ensemble de son écosystème de solutions numériques : solutions web pour exploitants et prestataires, ainsi que des applications mobiles.
+                  L'entreprise développe en interne l'ensemble de son écosystème de solutions numériques : solutions web pour exploitants et prestataires, ainsi que des applications mobiles. Sa mission est de fournir "la mémoire digitale de vos bâtiments" avec une plateforme unique qui centralise toutes les obligations réglementaires.
                 </p>
               </div>
 
