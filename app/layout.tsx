@@ -13,8 +13,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Alban Richer - Lead Full Stack Developer",
-  description: "Portfolio d'Alban Richer, Lead Full Stack Developer chez Deemply, spécialisé dans le développement d'applications web modernes et les solutions immobilières innovantes.",
+  title: "Alban Richer - Lead Full Stack Developer | Deemply",
+  description: "Portfolio d'Alban Richer, Lead Full Stack Developer chez Deemply depuis 2020. Expert en développement web full stack, architecture Java/Spring, et solutions de conformité digitale pour les bâtiments.",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {

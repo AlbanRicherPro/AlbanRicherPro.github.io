@@ -6,6 +6,7 @@ export default function Home() {
           <h1 className="text-xl font-bold text-gray-900 dark:text-white">Alban Richer</h1>
           <div className="flex gap-6">
             <a href="#about" className="text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">À propos</a>
+            <a href="#experience" className="text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">Expérience</a>
             <a href="#skills" className="text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">Compétences</a>
             <a href="#contact" className="text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">Contact</a>
             <a href="https://fr.linkedin.com/in/alban-richer-144085a7" target="_blank" rel="noopener noreferrer" className="text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">LinkedIn</a>
@@ -30,6 +31,98 @@ export default function Home() {
         </div>
       </section>
 
+      <section id="experience" className="py-20 px-4 bg-white/50 dark:bg-gray-800/50">
+        <div className="max-w-4xl mx-auto">
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-8 text-center">Expérience Professionnelle</h2>
+          <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-8 md:p-12">
+            <div className="mb-8">
+              <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">Lead Full Stack Developer</h3>
+              <p className="text-lg text-blue-600 dark:text-blue-400 font-semibold mb-4">Deemply • Mars 2020 - Présent (6 ans)</p>
+              
+              <div className="mb-6">
+                <h4 className="text-xl font-semibold text-gray-900 dark:text-white mb-3">🏢 Entreprise</h4>
+                <p className="text-gray-700 dark:text-gray-300 leading-relaxed mb-2">
+                  <strong>Deemply</strong> est une entreprise technologique fondée en 2012, spécialisée dans la dématérialisation des registres de sécurité et la conformité digitale pour les bâtiments. Basée à La Roche-sur-Yon, l'entreprise compte 10-20 employés et dispose d'une équipe R&D de 9 développeurs.
+                </p>
+                <p className="text-gray-700 dark:text-gray-300 leading-relaxed">
+                  L'entreprise développe en interne l'ensemble de son écosystème de solutions numériques : solutions web pour exploitants et prestataires, ainsi que des applications mobiles.
+                </p>
+              </div>
+
+              <div className="mb-6">
+                <h4 className="text-xl font-semibold text-gray-900 dark:text-white mb-3">🎯 Contexte & Missions</h4>
+                <ul className="space-y-2 text-gray-700 dark:text-gray-300">
+                  <li className="flex items-start gap-2">
+                    <span className="text-blue-500 mt-1">•</span>
+                    Conception et développement de solutions web et mobiles pour la gestion de registres de sécurité dématérialisés
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-blue-500 mt-1">•</span>
+                    Transformation de processus administratifs complexes en interfaces intuitives et performantes
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-blue-500 mt-1">•</span>
+                    Garantie de la qualité, sécurité et évolutivité des solutions développées en interne
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-blue-500 mt-1">•</span>
+                    Collaboration étroite avec les équipes commerciales et support pour aligner le développement avec les besoins clients
+                  </li>
+                </ul>
+              </div>
+
+              <div className="mb-6">
+                <h4 className="text-xl font-semibold text-gray-900 dark:text-white mb-3">💻 Stack Technique</h4>
+                <div className="grid md:grid-cols-2 gap-4">
+                  <div className="bg-gray-50 dark:bg-gray-700 rounded-lg p-4">
+                    <h5 className="font-semibold text-gray-900 dark:text-white mb-2">Frontend</h5>
+                    <p className="text-gray-700 dark:text-gray-300 text-sm">Angular, Vue.js, JavaScript, TypeScript, HTML5, CSS3</p>
+                  </div>
+                  <div className="bg-gray-50 dark:bg-gray-700 rounded-lg p-4">
+                    <h5 className="font-semibold text-gray-900 dark:text-white mb-2">Backend</h5>
+                    <p className="text-gray-700 dark:text-gray-300 text-sm">Java, Spring Boot, Spring Security, Spring Batch, PHP, Node.js</p>
+                  </div>
+                  <div className="bg-gray-50 dark:bg-gray-700 rounded-lg p-4">
+                    <h5 className="font-semibold text-gray-900 dark:text-white mb-2">Base de données</h5>
+                    <p className="text-gray-700 dark:text-gray-300 text-sm">SQL, Oracle SQL Developer, PostgreSQL</p>
+                  </div>
+                  <div className="bg-gray-50 dark:bg-gray-700 rounded-lg p-4">
+                    <h5 className="font-semibold text-gray-900 dark:text-white mb-2">DevOps & Outils</h5>
+                    <p className="text-gray-700 dark:text-gray-300 text-sm">Docker, Jenkins, CI/CD, Git, Maven, XL Deploy</p>
+                  </div>
+                </div>
+              </div>
+
+              <div>
+                <h4 className="text-xl font-semibold text-gray-900 dark:text-white mb-3">🔧 Responsabilités</h4>
+                <ul className="space-y-2 text-gray-700 dark:text-gray-300">
+                  <li className="flex items-start gap-2">
+                    <span className="text-green-500 mt-1">✓</span>
+                    Leadership technique et coordination de l'équipe de développement
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-green-500 mt-1">✓</span>
+                    Architecture et conception des solutions full stack
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-green-500 mt-1">✓</span>
+                    Développement des fonctionnalités critiques et optimisation des performances
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-green-500 mt-1">✓</span>
+                    Mise en place des processus CI/CD et bonnes pratiques de développement
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-green-500 mt-1">✓</span>
+                    Mentorat des développeurs juniors et montée en compétences de l'équipe
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       <section id="skills" className="py-20 px-4">
         <div className="max-w-4xl mx-auto">
           <h2 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-8 text-center">Compétences</h2>
@@ -39,19 +132,19 @@ export default function Home() {
               <ul className="space-y-2 text-gray-700 dark:text-gray-300">
                 <li className="flex items-center gap-2">
                   <span className="w-2 h-2 bg-blue-500 rounded-full"></span>
-                  React / Next.js
+                  Angular / Vue.js
                 </li>
                 <li className="flex items-center gap-2">
                   <span className="w-2 h-2 bg-blue-500 rounded-full"></span>
-                  TypeScript
-                </li>
-                <li className="flex items-center gap-2">
-                  <span className="w-2 h-2 bg-blue-500 rounded-full"></span>
-                  Tailwind CSS
+                  JavaScript / TypeScript
                 </li>
                 <li className="flex items-center gap-2">
                   <span className="w-2 h-2 bg-blue-500 rounded-full"></span>
                   HTML5 / CSS3
+                </li>
+                <li className="flex items-center gap-2">
+                  <span className="w-2 h-2 bg-blue-500 rounded-full"></span>
+                  NativeScript (mobile)
                 </li>
               </ul>
             </div>
@@ -60,15 +153,15 @@ export default function Home() {
               <ul className="space-y-2 text-gray-700 dark:text-gray-300">
                 <li className="flex items-center gap-2">
                   <span className="w-2 h-2 bg-green-500 rounded-full"></span>
-                  Node.js
+                  Java / Spring Boot
+                </li>
+                <li className="flex items-center gap-2">
+                  <span className="w-2 h-2 bg-green-500 rounded-full"></span>
+                  Spring Security / Spring Batch
                 </li>
                 <li className="flex items-center gap-2">
                   <span className="w-2 h-2 bg-green-500 rounded-full"></span>
                   PHP
-                </li>
-                <li className="flex items-center gap-2">
-                  <span className="w-2 h-2 bg-green-500 rounded-full"></span>
-                  PostgreSQL
                 </li>
                 <li className="flex items-center gap-2">
                   <span className="w-2 h-2 bg-green-500 rounded-full"></span>
@@ -81,7 +174,11 @@ export default function Home() {
               <ul className="space-y-2 text-gray-700 dark:text-gray-300">
                 <li className="flex items-center gap-2">
                   <span className="w-2 h-2 bg-purple-500 rounded-full"></span>
-                  Architecture microservices
+                  Docker
+                </li>
+                <li className="flex items-center gap-2">
+                  <span className="w-2 h-2 bg-purple-500 rounded-full"></span>
+                  Jenkins / CI/CD
                 </li>
                 <li className="flex items-center gap-2">
                   <span className="w-2 h-2 bg-purple-500 rounded-full"></span>
@@ -89,28 +186,70 @@ export default function Home() {
                 </li>
                 <li className="flex items-center gap-2">
                   <span className="w-2 h-2 bg-purple-500 rounded-full"></span>
-                  CI/CD
-                </li>
-                <li className="flex items-center gap-2">
-                  <span className="w-2 h-2 bg-purple-500 rounded-full"></span>
-                  Docker
+                  Maven / XL Deploy
                 </li>
               </ul>
             </div>
             <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6">
-              <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">Expérience</h3>
+              <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">Base de données</h3>
               <ul className="space-y-2 text-gray-700 dark:text-gray-300">
                 <li className="flex items-center gap-2">
                   <span className="w-2 h-2 bg-orange-500 rounded-full"></span>
-                  Deemply - Lead Full Stack Developer (2020-présent)
+                  SQL
                 </li>
                 <li className="flex items-center gap-2">
                   <span className="w-2 h-2 bg-orange-500 rounded-full"></span>
-                  Développement de solutions immobilières
+                  Oracle SQL Developer
                 </li>
                 <li className="flex items-center gap-2">
                   <span className="w-2 h-2 bg-orange-500 rounded-full"></span>
-                  Architecture et performance
+                  PostgreSQL
+                </li>
+                <li className="flex items-center gap-2">
+                  <span className="w-2 h-2 bg-orange-500 rounded-full"></span>
+                  Hibernate
+                </li>
+              </ul>
+            </div>
+            <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6">
+              <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">Langages de programmation</h3>
+              <ul className="space-y-2 text-gray-700 dark:text-gray-300">
+                <li className="flex items-center gap-2">
+                  <span className="w-2 h-2 bg-red-500 rounded-full"></span>
+                  C / C++
+                </li>
+                <li className="flex items-center gap-2">
+                  <span className="w-2 h-2 bg-red-500 rounded-full"></span>
+                  Caml / OCaml
+                </li>
+                <li className="flex items-center gap-2">
+                  <span className="w-2 h-2 bg-red-500 rounded-full"></span>
+                  Scheme
+                </li>
+                <li className="flex items-center gap-2">
+                  <span className="w-2 h-2 bg-red-500 rounded-full"></span>
+                  Java Enterprise Edition
+                </li>
+              </ul>
+            </div>
+            <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6">
+              <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">Autres compétences</h3>
+              <ul className="space-y-2 text-gray-700 dark:text-gray-300">
+                <li className="flex items-center gap-2">
+                  <span className="w-2 h-2 bg-teal-500 rounded-full"></span>
+                  Gestion de projet
+                </li>
+                <li className="flex items-center gap-2">
+                  <span className="w-2 h-2 bg-teal-500 rounded-full"></span>
+                  Gestion d'équipe
+                </li>
+                <li className="flex items-center gap-2">
+                  <span className="w-2 h-2 bg-teal-500 rounded-full"></span>
+                  Leadership
+                </li>
+                <li className="flex items-center gap-2">
+                  <span className="w-2 h-2 bg-teal-500 rounded-full"></span>
+                  Anglais professionnel
                 </li>
               </ul>
             </div>
@@ -131,7 +270,7 @@ export default function Home() {
                 </div>
                 <div>
                   <h3 className="font-semibold text-gray-900 dark:text-white">Email</h3>
-                  <p className="text-gray-700 dark:text-gray-300">votre.email@example.com</p>
+                  <p className="text-gray-700 dark:text-gray-300">alban.richer@deemply.com</p>
                 </div>
               </div>
               <div className="flex items-center gap-4">
