@@ -1,54 +1,140 @@
+'use client';
+
+import { useEffect, useState } from 'react';
+
 export default function Home() {
+  const [scrollY, setScrollY] = useState(0);
+
+  useEffect(() => {
+    const handleScroll = () => setScrollY(window.scrollY);
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 dark:from-gray-900 dark:to-gray-800">
-      <nav className="fixed top-0 w-full bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm z-50 border-b border-gray-200 dark:border-gray-700">
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 overflow-hidden">
+      {/* Animated background particles */}
+      <div className="fixed inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute top-20 left-20 w-72 h-72 bg-purple-500 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob"></div>
+        <div className="absolute top-40 right-20 w-72 h-72 bg-cyan-500 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-2000"></div>
+        <div className="absolute bottom-20 left-1/2 w-72 h-72 bg-pink-500 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-4000"></div>
+      </div>
+
+      {/* Navigation */}
+      <nav className="fixed top-0 w-full bg-white/10 dark:bg-black/10 backdrop-blur-xl z-50 border-b border-white/20">
         <div className="max-w-6xl mx-auto px-4 py-4 flex justify-between items-center">
-          <h1 className="text-xl font-bold text-gray-900 dark:text-white">Alban Richer</h1>
+          <h1 className="text-xl font-bold text-white hover:text-purple-400 transition-colors duration-300 cursor-pointer">Alban Richer</h1>
           <div className="flex gap-6">
-            <a href="#about" className="text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">À propos</a>
-            <a href="#experience" className="text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">Expérience</a>
-            <a href="#skills" className="text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">Compétences</a>
-            <a href="#contact" className="text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">Contact</a>
-            <a href="https://fr.linkedin.com/in/alban-richer-144085a7" target="_blank" rel="noopener noreferrer" className="text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">LinkedIn</a>
+            {['À propos', 'Expérience', 'Compétences', 'Contact'].map((item) => (
+              <a
+                key={item}
+                href={`#${item.toLowerCase().replace(' ', '-')}`}
+                className="text-gray-300 hover:text-white hover:scale-110 transition-all duration-300 relative group"
+              >
+                {item}
+                <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-purple-400 transition-all duration-300 group-hover:w-full"></span>
+              </a>
+            ))}
+            <a
+              href="https://fr.linkedin.com/in/alban-richer-144085a7"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-gray-300 hover:text-purple-400 hover:scale-110 transition-all duration-300"
+            >
+              LinkedIn
+            </a>
           </div>
         </div>
       </nav>
 
-      <section id="about" className="pt-32 pb-20 px-4">
+      {/* Hero Section */}
+      <section className="min-h-screen flex items-center justify-center px-4 relative">
+        <div className="max-w-4xl mx-auto text-center z-10">
+          <div className="mb-8 relative inline-block">
+            <div className="w-48 h-48 md:w-64 md:h-64 rounded-full overflow-hidden shadow-2xl mx-auto border-4 border-purple-500/30 hover:border-purple-400 transition-all duration-500 hover:scale-105">
+              <img
+                src="/alban-richer.jpg"
+                alt="Alban Richer"
+                className="w-full h-full object-cover"
+              />
+            </div>
+            <div className="absolute inset-0 rounded-full bg-gradient-to-tr from-purple-500/20 to-cyan-500/20 blur-xl animate-pulse"></div>
+          </div>
+
+          <h1 className="text-5xl md:text-7xl font-bold text-white mb-6 animate-gradient">
+            <span className="bg-clip-text text-transparent bg-gradient-to-r from-purple-400 via-pink-400 to-cyan-400">
+              Alban Richer
+            </span>
+          </h1>
+
+          <p className="text-2xl md:text-3xl text-gray-300 mb-4 font-light">
+            Lead Full Stack Developer
+          </p>
+
+          <p className="text-lg text-gray-400 mb-8 max-w-2xl mx-auto">
+            Transformant le futur du développement web avec des solutions innovantes et des expériences utilisateur exceptionnelles
+          </p>
+
+          <div className="flex gap-4 justify-center">
+            <a
+              href="#experience"
+              className="px-8 py-3 bg-gradient-to-r from-purple-500 to-cyan-500 text-white rounded-full font-semibold hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-purple-500/50"
+            >
+              Découvrir mon parcours
+            </a>
+            <a
+              href="#contact"
+              className="px-8 py-3 border-2 border-purple-500 text-purple-400 rounded-full font-semibold hover:bg-purple-500/10 transition-all duration-300"
+            >
+              Me contacter
+            </a>
+          </div>
+        </div>
+
+        {/* Scroll indicator */}
+        <div className="absolute bottom-10 left-1/2 transform -translate-x-1/2 animate-bounce">
+          <svg className="w-6 h-6 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+          </svg>
+        </div>
+      </section>
+
+      {/* About Section */}
+      <section id="about" className="py-20 px-4 relative">
         <div className="max-w-4xl mx-auto">
-          <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-8 md:p-12">
-            <div className="flex flex-col md:flex-row gap-8 items-center md:items-start">
-              <div className="w-32 h-32 md:w-48 md:h-48 rounded-full overflow-hidden shadow-lg flex-shrink-0">
-                <img
-                  src="/alban-richer.jpg"
-                  alt="Alban Richer"
-                  className="w-full h-full object-cover"
-                />
-              </div>
-              <div className="flex-1">
-                <h2 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-6">À propos de moi</h2>
-                <p className="text-lg text-gray-700 dark:text-gray-300 leading-relaxed mb-4">
-                  Lead Full Stack Developer chez Deemply, spécialisé dans le développement d'applications web modernes et performantes. Je conçois et développe des solutions techniques innovantes pour la gestion de bâtiments et les services immobiliers.
-                </p>
-                <p className="text-lg text-gray-700 dark:text-gray-300 leading-relaxed mb-4">
-                  Avec plus de 6 ans d'expérience en développement full stack, j'expertise les technologies front-end et back-end pour créer des expériences utilisateur fluides et des architectures robustes. Je suis passionné par l'innovation technologique et l'amélioration continue des processus de développement.
-                </p>
-                <p className="text-lg text-gray-700 dark:text-gray-300 leading-relaxed">
-                  Basé dans la région Pays de la Loire, je travaille au sein d'une équipe dynamique pour transformer le secteur immobilier grâce à des solutions numériques innovantes.
-                </p>
-              </div>
+          <div className="bg-white/5 backdrop-blur-xl rounded-3xl border border-white/10 p-8 md:p-12 hover:border-purple-500/30 transition-all duration-500">
+            <h2 className="text-4xl md:text-5xl font-bold text-white mb-8 text-center">
+              <span className="bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-cyan-400">
+                À propos de moi
+              </span>
+            </h2>
+            <div className="space-y-6 text-gray-300 text-lg leading-relaxed">
+              <p className="hover:text-white transition-colors duration-300">
+                Lead Full Stack Developer chez <span className="text-purple-400 font-semibold">Deemply</span>, spécialisé dans le développement d'applications web modernes et performantes. Je conçois et développe des solutions techniques innovantes pour la gestion de bâtiments et les services immobiliers.
+              </p>
+              <p className="hover:text-white transition-colors duration-300">
+                Avec plus de 6 ans d'expérience en développement full stack, j'expertise les technologies front-end et back-end pour créer des expériences utilisateur fluides et des architectures robustes. Je suis passionné par l'innovation technologique et l'amélioration continue des processus de développement.
+              </p>
+              <p className="hover:text-white transition-colors duration-300">
+                Basé dans la région Pays de la Loire, je travaille au sein d'une équipe dynamique pour transformer le secteur immobilier grâce à des solutions numériques innovantes.
+              </p>
             </div>
           </div>
         </div>
       </section>
 
-      <section id="experience" className="py-20 px-4 bg-white/50 dark:bg-gray-800/50">
+      {/* Experience Section */}
+      <section id="experience" className="py-20 px-4 relative">
         <div className="max-w-4xl mx-auto">
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-8 text-center">Expérience Professionnelle</h2>
-          <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-8 md:p-12">
+          <h2 className="text-4xl md:text-5xl font-bold text-white mb-12 text-center">
+            <span className="bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-cyan-400">
+              Expérience Professionnelle
+            </span>
+          </h2>
+          <div className="bg-white/5 backdrop-blur-xl rounded-3xl border border-white/10 p-8 md:p-12 hover:border-purple-500/30 transition-all duration-500">
             <div className="mb-8">
-              <div className="flex items-center gap-4 mb-4">
-                <div className="w-16 h-16 rounded-lg overflow-hidden flex-shrink-0">
+              <div className="flex items-center gap-6 mb-6">
+                <div className="w-20 h-20 rounded-2xl overflow-hidden flex-shrink-0 border-2 border-purple-500/30 hover:border-purple-400 transition-all duration-300 hover:scale-105">
                   <img
                     src="/deemply_logo.jpeg"
                     alt="Deemply Logo"
@@ -56,287 +142,238 @@ export default function Home() {
                   />
                 </div>
                 <div>
-                  <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-1">Lead Full Stack Developer</h3>
-                  <p className="text-lg text-blue-600 dark:text-blue-400 font-semibold">Deemply • Mars 2020 - Présent (6 ans)</p>
-                </div>
-              </div>
-              
-              <div className="mb-6">
-                <h4 className="text-xl font-semibold text-gray-900 dark:text-white mb-3">🏢 Entreprise</h4>
-                <p className="text-gray-700 dark:text-gray-300 leading-relaxed mb-2">
-                  <strong>Deemply</strong> est une entreprise technologique fondée en 2012, spécialisée dans la dématérialisation des registres de sécurité et la conformité digitale pour les bâtiments. Basée à La Roche-sur-Yon, l'entreprise compte 10-20 employés et dispose d'une équipe R&D de 9 développeurs.
-                </p>
-                <p className="text-gray-700 dark:text-gray-300 leading-relaxed">
-                  L'entreprise développe en interne l'ensemble de son écosystème de solutions numériques : solutions web pour exploitants et prestataires, ainsi que des applications mobiles. Sa mission est de fournir "la mémoire digitale de vos bâtiments" avec une plateforme unique qui centralise toutes les obligations réglementaires.
-                </p>
-              </div>
-
-              <div className="mb-6">
-                <h4 className="text-xl font-semibold text-gray-900 dark:text-white mb-3">🎯 Contexte & Missions</h4>
-                <ul className="space-y-2 text-gray-700 dark:text-gray-300">
-                  <li className="flex items-start gap-2">
-                    <span className="text-blue-500 mt-1">•</span>
-                    Conception et développement de solutions web et mobiles pour la gestion de registres de sécurité dématérialisés
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-blue-500 mt-1">•</span>
-                    Transformation de processus administratifs complexes en interfaces intuitives et performantes
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-blue-500 mt-1">•</span>
-                    Garantie de la qualité, sécurité et évolutivité des solutions développées en interne
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-blue-500 mt-1">•</span>
-                    Collaboration étroite avec les équipes commerciales et support pour aligner le développement avec les besoins clients
-                  </li>
-                </ul>
-              </div>
-
-              <div className="mb-6">
-                <h4 className="text-xl font-semibold text-gray-900 dark:text-white mb-3">💻 Stack Technique</h4>
-                <div className="grid md:grid-cols-2 gap-4">
-                  <div className="bg-gray-50 dark:bg-gray-700 rounded-lg p-4">
-                    <h5 className="font-semibold text-gray-900 dark:text-white mb-2">Frontend</h5>
-                    <p className="text-gray-700 dark:text-gray-300 text-sm">Angular, Vue.js, JavaScript, TypeScript, HTML5, CSS3</p>
-                  </div>
-                  <div className="bg-gray-50 dark:bg-gray-700 rounded-lg p-4">
-                    <h5 className="font-semibold text-gray-900 dark:text-white mb-2">Backend</h5>
-                    <p className="text-gray-700 dark:text-gray-300 text-sm">Java, Spring Boot, Spring Security, Spring Batch, PHP, Node.js</p>
-                  </div>
-                  <div className="bg-gray-50 dark:bg-gray-700 rounded-lg p-4">
-                    <h5 className="font-semibold text-gray-900 dark:text-white mb-2">Base de données</h5>
-                    <p className="text-gray-700 dark:text-gray-300 text-sm">SQL, Oracle SQL Developer, PostgreSQL</p>
-                  </div>
-                  <div className="bg-gray-50 dark:bg-gray-700 rounded-lg p-4">
-                    <h5 className="font-semibold text-gray-900 dark:text-white mb-2">DevOps & Outils</h5>
-                    <p className="text-gray-700 dark:text-gray-300 text-sm">Docker, Jenkins, CI/CD, Git, Maven, XL Deploy</p>
-                  </div>
+                  <h3 className="text-3xl font-bold text-white mb-2">Lead Full Stack Developer</h3>
+                  <p className="text-xl text-purple-400 font-semibold">Deemply • Mars 2020 - Présent (6 ans)</p>
                 </div>
               </div>
 
-              <div>
-                <h4 className="text-xl font-semibold text-gray-900 dark:text-white mb-3">🔧 Responsabilités</h4>
-                <ul className="space-y-2 text-gray-700 dark:text-gray-300">
-                  <li className="flex items-start gap-2">
-                    <span className="text-green-500 mt-1">✓</span>
-                    Leadership technique et coordination de l'équipe de développement
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-green-500 mt-1">✓</span>
-                    Architecture et conception des solutions full stack
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-green-500 mt-1">✓</span>
-                    Développement des fonctionnalités critiques et optimisation des performances
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-green-500 mt-1">✓</span>
-                    Mise en place des processus CI/CD et bonnes pratiques de développement
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-green-500 mt-1">✓</span>
-                    Mentorat des développeurs juniors et montée en compétences de l'équipe
-                  </li>
-                </ul>
+              <div className="space-y-8">
+                <div className="bg-gradient-to-r from-purple-500/10 to-cyan-500/10 rounded-2xl p-6 border border-purple-500/20">
+                  <h4 className="text-2xl font-semibold text-white mb-4 flex items-center gap-2">
+                    <span className="text-3xl">🏢</span> Entreprise
+                  </h4>
+                  <p className="text-gray-300 leading-relaxed mb-3">
+                    <span className="text-purple-400 font-semibold">Deemply</span> est une entreprise technologique fondée en 2012, spécialisée dans la dématérialisation des registres de sécurité et la conformité digitale pour les bâtiments. Basée à La Roche-sur-Yon, l'entreprise compte 10-20 employés et dispose d'une équipe R&D de 9 développeurs.
+                  </p>
+                  <p className="text-gray-300 leading-relaxed">
+                    L'entreprise développe en interne l'ensemble de son écosystème de solutions numériques : solutions web pour exploitants et prestataires, ainsi que des applications mobiles. Sa mission est de fournir "la mémoire digitale de vos bâtiments" avec une plateforme unique qui centralise toutes les obligations réglementaires.
+                  </p>
+                </div>
+
+                <div className="bg-gradient-to-r from-cyan-500/10 to-purple-500/10 rounded-2xl p-6 border border-cyan-500/20">
+                  <h4 className="text-2xl font-semibold text-white mb-4 flex items-center gap-2">
+                    <span className="text-3xl">🎯</span> Contexte & Missions
+                  </h4>
+                  <ul className="space-y-3 text-gray-300">
+                    {[
+                      "Conception et développement de solutions web et mobiles pour la gestion de registres de sécurité dématérialisés",
+                      "Transformation de processus administratifs complexes en interfaces intuitives et performantes",
+                      "Garantie de la qualité, sécurité et évolutivité des solutions développées en interne",
+                      "Collaboration étroite avec les équipes commerciales et support pour aligner le développement avec les besoins clients"
+                    ].map((item, index) => (
+                      <li key={index} className="flex items-start gap-3 hover:text-white transition-colors duration-300">
+                        <span className="text-cyan-400 mt-1">→</span>
+                        {item}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+
+                <div className="bg-gradient-to-r from-pink-500/10 to-purple-500/10 rounded-2xl p-6 border border-pink-500/20">
+                  <h4 className="text-2xl font-semibold text-white mb-4 flex items-center gap-2">
+                    <span className="text-3xl">💻</span> Stack Technique
+                  </h4>
+                  <div className="grid md:grid-cols-2 gap-4">
+                    {[
+                      { title: "Frontend", tech: "Angular, Vue.js, JavaScript, TypeScript, HTML5, CSS3", color: "purple" },
+                      { title: "Backend", tech: "Java, Spring Boot, Spring Security, Spring Batch, PHP, Node.js", color: "cyan" },
+                      { title: "Base de données", tech: "SQL, Oracle SQL Developer, PostgreSQL", color: "pink" },
+                      { title: "DevOps & Outils", tech: "Docker, Jenkins, CI/CD, Git, Maven, XL Deploy", color: "purple" }
+                    ].map((item, index) => (
+                      <div key={index} className={`bg-${item.color}-500/10 rounded-xl p-4 border border-${item.color}-500/20 hover:bg-${item.color}-500/20 transition-all duration-300`}>
+                        <h5 className="font-semibold text-white mb-2">{item.title}</h5>
+                        <p className="text-gray-300 text-sm">{item.tech}</p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="bg-gradient-to-r from-green-500/10 to-cyan-500/10 rounded-2xl p-6 border border-green-500/20">
+                  <h4 className="text-2xl font-semibold text-white mb-4 flex items-center gap-2">
+                    <span className="text-3xl">🔧</span> Responsabilités
+                  </h4>
+                  <ul className="space-y-3 text-gray-300">
+                    {[
+                      "Leadership technique et coordination de l'équipe de développement",
+                      "Architecture et conception des solutions full stack",
+                      "Développement des fonctionnalités critiques et optimisation des performances",
+                      "Mise en place des processus CI/CD et bonnes pratiques de développement",
+                      "Mentorat des développeurs juniors et montée en compétences de l'équipe"
+                    ].map((item, index) => (
+                      <li key={index} className="flex items-start gap-3 hover:text-white transition-colors duration-300">
+                        <span className="text-green-400 mt-1">✓</span>
+                        {item}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      <section id="skills" className="py-20 px-4">
+      {/* Skills Section */}
+      <section id="skills" className="py-20 px-4 relative">
         <div className="max-w-4xl mx-auto">
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-8 text-center">Compétences</h2>
+          <h2 className="text-4xl md:text-5xl font-bold text-white mb-12 text-center">
+            <span className="bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-cyan-400">
+              Compétences
+            </span>
+          </h2>
           <div className="grid md:grid-cols-2 gap-6">
-            <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6">
-              <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">Développement Frontend</h3>
-              <ul className="space-y-2 text-gray-700 dark:text-gray-300">
-                <li className="flex items-center gap-2">
-                  <span className="w-2 h-2 bg-blue-500 rounded-full"></span>
-                  Angular / Vue.js
-                </li>
-                <li className="flex items-center gap-2">
-                  <span className="w-2 h-2 bg-blue-500 rounded-full"></span>
-                  JavaScript / TypeScript
-                </li>
-                <li className="flex items-center gap-2">
-                  <span className="w-2 h-2 bg-blue-500 rounded-full"></span>
-                  HTML5 / CSS3
-                </li>
-                <li className="flex items-center gap-2">
-                  <span className="w-2 h-2 bg-blue-500 rounded-full"></span>
-                  NativeScript (mobile)
-                </li>
-              </ul>
-            </div>
-            <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6">
-              <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">Développement Backend</h3>
-              <ul className="space-y-2 text-gray-700 dark:text-gray-300">
-                <li className="flex items-center gap-2">
-                  <span className="w-2 h-2 bg-green-500 rounded-full"></span>
-                  Java / Spring Boot
-                </li>
-                <li className="flex items-center gap-2">
-                  <span className="w-2 h-2 bg-green-500 rounded-full"></span>
-                  Spring Security / Spring Batch
-                </li>
-                <li className="flex items-center gap-2">
-                  <span className="w-2 h-2 bg-green-500 rounded-full"></span>
-                  PHP
-                </li>
-                <li className="flex items-center gap-2">
-                  <span className="w-2 h-2 bg-green-500 rounded-full"></span>
-                  REST APIs
-                </li>
-              </ul>
-            </div>
-            <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6">
-              <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">Architecture & DevOps</h3>
-              <ul className="space-y-2 text-gray-700 dark:text-gray-300">
-                <li className="flex items-center gap-2">
-                  <span className="w-2 h-2 bg-purple-500 rounded-full"></span>
-                  Docker
-                </li>
-                <li className="flex items-center gap-2">
-                  <span className="w-2 h-2 bg-purple-500 rounded-full"></span>
-                  Jenkins / CI/CD
-                </li>
-                <li className="flex items-center gap-2">
-                  <span className="w-2 h-2 bg-purple-500 rounded-full"></span>
-                  Git / GitHub
-                </li>
-                <li className="flex items-center gap-2">
-                  <span className="w-2 h-2 bg-purple-500 rounded-full"></span>
-                  Maven / XL Deploy
-                </li>
-              </ul>
-            </div>
-            <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6">
-              <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">Base de données</h3>
-              <ul className="space-y-2 text-gray-700 dark:text-gray-300">
-                <li className="flex items-center gap-2">
-                  <span className="w-2 h-2 bg-orange-500 rounded-full"></span>
-                  SQL
-                </li>
-                <li className="flex items-center gap-2">
-                  <span className="w-2 h-2 bg-orange-500 rounded-full"></span>
-                  Oracle SQL Developer
-                </li>
-                <li className="flex items-center gap-2">
-                  <span className="w-2 h-2 bg-orange-500 rounded-full"></span>
-                  PostgreSQL
-                </li>
-                <li className="flex items-center gap-2">
-                  <span className="w-2 h-2 bg-orange-500 rounded-full"></span>
-                  Hibernate
-                </li>
-              </ul>
-            </div>
-            <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6">
-              <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">Langages de programmation</h3>
-              <ul className="space-y-2 text-gray-700 dark:text-gray-300">
-                <li className="flex items-center gap-2">
-                  <span className="w-2 h-2 bg-red-500 rounded-full"></span>
-                  C / C++
-                </li>
-                <li className="flex items-center gap-2">
-                  <span className="w-2 h-2 bg-red-500 rounded-full"></span>
-                  Caml / OCaml
-                </li>
-                <li className="flex items-center gap-2">
-                  <span className="w-2 h-2 bg-red-500 rounded-full"></span>
-                  Scheme
-                </li>
-                <li className="flex items-center gap-2">
-                  <span className="w-2 h-2 bg-red-500 rounded-full"></span>
-                  Java Enterprise Edition
-                </li>
-              </ul>
-            </div>
-            <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6">
-              <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">Autres compétences</h3>
-              <ul className="space-y-2 text-gray-700 dark:text-gray-300">
-                <li className="flex items-center gap-2">
-                  <span className="w-2 h-2 bg-teal-500 rounded-full"></span>
-                  Gestion de projet
-                </li>
-                <li className="flex items-center gap-2">
-                  <span className="w-2 h-2 bg-teal-500 rounded-full"></span>
-                  Gestion d'équipe
-                </li>
-                <li className="flex items-center gap-2">
-                  <span className="w-2 h-2 bg-teal-500 rounded-full"></span>
-                  Leadership
-                </li>
-                <li className="flex items-center gap-2">
-                  <span className="w-2 h-2 bg-teal-500 rounded-full"></span>
-                  Anglais professionnel
-                </li>
-              </ul>
-            </div>
+            {[
+              { title: "Développement Frontend", icon: "🎨", skills: ["Angular / Vue.js", "JavaScript / TypeScript", "HTML5 / CSS3", "NativeScript (mobile)"], color: "purple" },
+              { title: "Développement Backend", icon: "⚙️", skills: ["Java / Spring Boot", "Spring Security / Spring Batch", "PHP", "REST APIs"], color: "cyan" },
+              { title: "Architecture & DevOps", icon: "🚀", skills: ["Docker", "Jenkins / CI/CD", "Git / GitHub", "Maven / XL Deploy"], color: "pink" },
+              { title: "Base de données", icon: "🗄️", skills: ["SQL", "Oracle SQL Developer", "PostgreSQL", "Hibernate"], color: "green" },
+              { title: "Langages de programmation", icon: "💻", skills: ["C / C++", "Caml / OCaml", "Scheme", "Java Enterprise Edition"], color: "orange" },
+              { title: "Autres compétences", icon: "🎯", skills: ["Gestion de projet", "Gestion d'équipe", "Leadership", "Anglais professionnel"], color: "teal" }
+            ].map((category, index) => (
+              <div
+                key={index}
+                className={`bg-gradient-to-br from-${category.color}-500/10 to-${category.color}-500/5 backdrop-blur-xl rounded-2xl border border-${category.color}-500/20 p-6 hover:border-${category.color}-500/40 hover:scale-105 transition-all duration-500 group`}
+              >
+                <h3 className="text-xl font-semibold text-white mb-4 flex items-center gap-2">
+                  <span className="text-2xl group-hover:scale-110 transition-transform duration-300">{category.icon}</span>
+                  {category.title}
+                </h3>
+                <ul className="space-y-2">
+                  {category.skills.map((skill, skillIndex) => (
+                    <li key={skillIndex} className="flex items-center gap-2 text-gray-300 hover:text-white transition-colors duration-300">
+                      <span className={`w-1.5 h-1.5 bg-${category.color}-400 rounded-full group-hover:scale-150 transition-transform duration-300`}></span>
+                      {skill}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
           </div>
         </div>
       </section>
 
-      <section id="contact" className="py-20 px-4">
+      {/* Contact Section */}
+      <section id="contact" className="py-20 px-4 relative">
         <div className="max-w-4xl mx-auto">
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-8 text-center">Contact</h2>
-          <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-8 md:p-12">
-            <div className="space-y-6">
-              <div className="flex items-center gap-4">
-                <div className="w-12 h-12 bg-blue-100 dark:bg-blue-900 rounded-full flex items-center justify-center">
-                  <svg className="w-6 h-6 text-blue-600 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                  </svg>
+          <h2 className="text-4xl md:text-5xl font-bold text-white mb-12 text-center">
+            <span className="bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-cyan-400">
+              Contact
+            </span>
+          </h2>
+          <div className="bg-white/5 backdrop-blur-xl rounded-3xl border border-white/10 p-8 md:p-12 hover:border-purple-500/30 transition-all duration-500">
+            <div className="grid md:grid-cols-2 gap-6">
+              {[
+                { icon: "📧", title: "Email", value: "Contact via LinkedIn", color: "blue" },
+                { icon: "📍", title: "Localisation", value: "Aizenay, Pays de la Loire, France", color: "green" },
+                { icon: "💻", title: "GitHub", value: "github.com/AlbanRicherPro", link: "https://github.com/AlbanRicherPro", color: "purple" },
+                { icon: "🔗", title: "LinkedIn", value: "linkedin.com/in/alban-richer-144085a7", link: "https://fr.linkedin.com/in/alban-richer-144085a7", color: "cyan" }
+              ].map((item, index) => (
+                <div
+                  key={index}
+                  className={`bg-gradient-to-br from-${item.color}-500/10 to-${item.color}-500/5 rounded-2xl p-6 border border-${item.color}-500/20 hover:border-${item.color}-500/40 hover:scale-105 transition-all duration-500 group`}
+                >
+                  <div className="flex items-center gap-4 mb-3">
+                    <span className="text-3xl group-hover:scale-110 transition-transform duration-300">{item.icon}</span>
+                    <h3 className="font-semibold text-white">{item.title}</h3>
+                  </div>
+                  {item.link ? (
+                    <a
+                      href={item.link}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-gray-300 hover:text-purple-400 transition-colors duration-300"
+                    >
+                      {item.value}
+                    </a>
+                  ) : (
+                    <p className="text-gray-300">{item.value}</p>
+                  )}
                 </div>
-                <div>
-                  <h3 className="font-semibold text-gray-900 dark:text-white">Email</h3>
-                  <p className="text-gray-700 dark:text-gray-300">Contact via LinkedIn</p>
-                </div>
-              </div>
-              <div className="flex items-center gap-4">
-                <div className="w-12 h-12 bg-green-100 dark:bg-green-900 rounded-full flex items-center justify-center">
-                  <svg className="w-6 h-6 text-green-600 dark:text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-                  </svg>
-                </div>
-                <div>
-                  <h3 className="font-semibold text-gray-900 dark:text-white">Localisation</h3>
-                  <p className="text-gray-700 dark:text-gray-300">Aizenay, Pays de la Loire, France</p>
-                </div>
-              </div>
-              <div className="flex items-center gap-4">
-                <div className="w-12 h-12 bg-purple-100 dark:bg-purple-900 rounded-full flex items-center justify-center">
-                  <svg className="w-6 h-6 text-purple-600 dark:text-purple-400" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
-                  </svg>
-                </div>
-                <div>
-                  <h3 className="font-semibold text-gray-900 dark:text-white">GitHub</h3>
-                  <a href="https://github.com/AlbanRicherPro" className="text-blue-600 dark:text-blue-400 hover:underline">github.com/AlbanRicherPro</a>
-                </div>
-              </div>
-              <div className="flex items-center gap-4">
-                <div className="w-12 h-12 bg-blue-100 dark:bg-blue-900 rounded-full flex items-center justify-center">
-                  <svg className="w-6 h-6 text-blue-600 dark:text-blue-400" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
-                  </svg>
-                </div>
-                <div>
-                  <h3 className="font-semibold text-gray-900 dark:text-white">LinkedIn</h3>
-                  <a href="https://fr.linkedin.com/in/alban-richer-144085a7" className="text-blue-600 dark:text-blue-400 hover:underline">linkedin.com/in/alban-richer-144085a7</a>
-                </div>
-              </div>
+              ))}
             </div>
           </div>
         </div>
       </section>
 
-      <footer className="py-8 text-center text-gray-600 dark:text-gray-400">
-        <p>© 2026 Alban Richer. Tous droits réservés.</p>
+      {/* Footer */}
+      <footer className="py-12 text-center border-t border-white/10">
+        <p className="text-gray-400 mb-4">
+          <span className="bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-cyan-400 font-semibold">
+            © 2026 Alban Richer
+          </span>
+          . Tous droits réservés.
+        </p>
+        <div className="flex justify-center gap-6">
+          <a
+            href="https://github.com/AlbanRicherPro"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-gray-400 hover:text-purple-400 transition-colors duration-300 hover:scale-110 transform"
+          >
+            GitHub
+          </a>
+          <a
+            href="https://fr.linkedin.com/in/alban-richer-144085a7"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-gray-400 hover:text-purple-400 transition-colors duration-300 hover:scale-110 transform"
+          >
+            LinkedIn
+          </a>
+        </div>
       </footer>
+
+      {/* Custom Styles */}
+      <style jsx global>{`
+        @keyframes blob {
+          0% {
+            transform: translate(0px, 0px) scale(1);
+          }
+          33% {
+            transform: translate(30px, -50px) scale(1.1);
+          }
+          66% {
+            transform: translate(-20px, 20px) scale(0.9);
+          }
+          100% {
+            transform: translate(0px, 0px) scale(1);
+          }
+        }
+        .animate-blob {
+          animation: blob 7s infinite;
+        }
+        .animation-delay-2000 {
+          animation-delay: 2s;
+        }
+        .animation-delay-4000 {
+          animation-delay: 4s;
+        }
+        @keyframes gradient {
+          0% {
+            background-position: 0% 50%;
+          }
+          50% {
+            background-position: 100% 50%;
+          }
+          100% {
+            background-position: 0% 50%;
+          }
+        }
+        .animate-gradient {
+          background-size: 200% 200%;
+          animation: gradient 3s ease infinite;
+        }
+      `}</style>
     </div>
   );
 }
