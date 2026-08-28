@@ -270,7 +270,7 @@ export default function Home() {
                 </div>
                 <div>
                   <h3 className="font-semibold text-gray-900 dark:text-white">Email</h3>
-                  <p className="text-gray-700 dark:text-gray-300">alban.richer@deemply.com</p>
+                  <p className="text-gray-700 dark:text-gray-300">Contact via LinkedIn</p>
                 </div>
               </div>
               <div className="flex items-center gap-4">
@@ -313,7 +313,7 @@ export default function Home() {
       </section>
 
       <footer className="py-8 text-center text-gray-600 dark:text-gray-400">
-        <p>© 2024 Alban Richer. Tous droits réservés.</p>
+        <p>© 2026 Alban Richer. Tous droits réservés.</p>
       </footer>
     </div>
   );
