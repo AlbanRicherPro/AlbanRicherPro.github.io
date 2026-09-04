@@ -1,5 +1,6 @@
 import SectionHeader from './ui/SectionHeader';
 import ContactItem from './ui/ContactItem';
+import ContactForm from './ui/ContactForm';
 
 export default function ContactSection() {
   const contactItems = [
@@ -10,13 +11,21 @@ export default function ContactSection() {
   ];
 
   return (
-    <div className="max-w-4xl mx-auto">
+    <div className="max-w-6xl mx-auto">
       <SectionHeader title="Contact" />
-      <div className="bg-white/5 backdrop-blur-xl rounded-3xl border border-slate-700/50 p-8 md:p-12 hover:border-indigo-500/30 transition-all duration-500">
-        <div className="grid md:grid-cols-2 gap-6">
-          {contactItems.map((item, index) => (
-            <ContactItem key={index} {...item} />
-          ))}
+      <div className="grid lg:grid-cols-2 gap-8">
+        <div className="bg-white/5 backdrop-blur-xl rounded-3xl border border-slate-700/50 p-8 md:p-12 hover:border-indigo-500/30 transition-all duration-500">
+          <h3 className="text-2xl font-bold text-white mb-6">Informations de contact</h3>
+          <div className="grid gap-4">
+            {contactItems.map((item, index) => (
+              <ContactItem key={index} {...item} />
+            ))}
+          </div>
+        </div>
+
+        <div className="bg-white/5 backdrop-blur-xl rounded-3xl border border-slate-700/50 p-8 md:p-12 hover:border-indigo-500/30 transition-all duration-500">
+          <h3 className="text-2xl font-bold text-white mb-6">Envoyer un message</h3>
+          <ContactForm />
         </div>
       </div>
     </div>
