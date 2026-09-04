@@ -11,6 +11,7 @@ import Footer from './components/Footer';
 
 export default function Home() {
   const [activeSection, setActiveSection] = useState('');
+  const [visibleSections, setVisibleSections] = useState<Set<string>>(new Set());
 
   useEffect(() => {
     const handleScroll = () => {
@@ -33,6 +34,29 @@ export default function Home() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setVisibleSections((prev) => new Set([...prev, entry.target.id]));
+          }
+        });
+      },
+      { threshold: 0.1 }
+    );
+
+    const sections = ['about', 'experience', 'skills', 'contact'];
+    sections.forEach((sectionId) => {
+      const element = document.getElementById(sectionId);
+      if (element) {
+        observer.observe(element);
+      }
+    });
+
+    return () => observer.disconnect();
+  }, []);
+
   const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId);
     if (element) {
@@ -53,19 +77,27 @@ export default function Home() {
       
       <Hero onScrollDown={(sectionId) => scrollToSection(sectionId)} />
       
-      <section id="about" className="py-20 px-4 relative">
+      <section id="about" className={`py-20 px-4 relative transition-all duration-1000 ${
+        visibleSections.has('about') ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-20'
+      }`}>
         <AboutSection />
       </section>
       
-      <section id="experience" className="py-20 px-4 relative">
+      <section id="experience" className={`py-20 px-4 relative transition-all duration-1000 ${
+        visibleSections.has('experience') ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-20'
+      }`}>
         <ExperienceSection />
       </section>
       
-      <section id="skills" className="py-20 px-4 relative">
+      <section id="skills" className={`py-20 px-4 relative transition-all duration-1000 ${
+        visibleSections.has('skills') ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-20'
+      }`}>
         <SkillsSection />
       </section>
       
-      <section id="contact" className="py-20 px-4 relative">
+      <section id="contact" className={`py-20 px-4 relative transition-all duration-1000 ${
+        visibleSections.has('contact') ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-20'
+      }`}>
         <ContactSection />
       </section>
       

@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
 
 interface HeroProps {
@@ -9,8 +9,11 @@ interface HeroProps {
 
 export default function Hero({ onScrollDown }: HeroProps) {
   const containerRef = useRef<HTMLDivElement>(null);
+  const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
+    setIsVisible(true);
+    
     const container = containerRef.current;
     if (!container) return;
 
@@ -44,7 +47,12 @@ export default function Hero({ onScrollDown }: HeroProps) {
 
   return (
     <section className="min-h-screen flex items-center justify-center px-4 relative overflow-hidden">
-      <div ref={containerRef} className="max-w-4xl mx-auto text-center z-10 transition-transform duration-100 ease-out">
+      <div 
+        ref={containerRef} 
+        className={`max-w-4xl mx-auto text-center z-10 transition-all duration-1000 ease-out ${
+          isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-20'
+        }`}
+      >
         <div className="mb-8 relative inline-block">
           <div className="w-48 h-48 md:w-64 md:h-64 rounded-full overflow-hidden shadow-2xl mx-auto border-4 border-indigo-500/30 hover:border-indigo-400 transition-all duration-500 hover:scale-105 relative z-10">
             <Image
