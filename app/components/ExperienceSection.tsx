@@ -3,8 +3,13 @@ import InfoCard from './ui/InfoCard';
 import TechStackItem from './ui/TechStackItem';
 import BulletList from './ui/BulletList';
 import CompanyInfo from './ui/CompanyInfo';
+import Image from 'next/image';
 
-export default function ExperienceSection() {
+interface ExperienceSectionProps {
+  videoSrc?: string;
+}
+
+export default function ExperienceSection({ videoSrc }: ExperienceSectionProps) {
   const stackItems = [
     { title: "Frontend", tech: "Vue.js 3, Vuetify 3, TypeScript 6, JavaScript, HTML5, CSS3", bgClass: "bg-indigo-500/10", borderClass: "border-indigo-500/20", hoverClass: "hover:bg-indigo-500/20" },
     { title: "Backend", tech: "PHP 8, Symfony 7, API Platform 4, REST APIs", bgClass: "bg-cyan-500/10", borderClass: "border-cyan-500/20", hoverClass: "hover:bg-cyan-500/20" },
@@ -30,73 +35,111 @@ export default function ExperienceSection() {
   ];
 
   return (
-    <div className="max-w-4xl mx-auto">
+    <div className="max-w-7xl mx-auto relative min-h-screen">
+      {videoSrc && (
+        <div className="absolute inset-0 -z-10 opacity-40 pointer-events-none">
+          <video
+            src={videoSrc}
+            muted
+            playsInline
+            loop
+            autoPlay
+            className="w-full h-full object-cover"
+          />
+          <div className="absolute inset-0 bg-gradient-to-br from-slate-900/85 via-slate-900/60 to-slate-900/85" />
+        </div>
+      )}
       <SectionHeader title="Expérience Professionnelle" />
       
-      <div className="bg-white/5 backdrop-blur-xl rounded-3xl border border-slate-700/50 p-8 md:p-12 hover:border-indigo-500/30 transition-all duration-500">
-        <div className="mb-8">
-          <CompanyInfo 
-            logo="/deemply_logo.jpeg"
-            logoAlt="Deemply Logo"
-            position="Lead Full Stack Developer"
-            company="Deemply"
-            period="Mars 2020 - Présent (6 ans)"
-          />
-
+      <div className="grid lg:grid-cols-3 gap-8 items-start">
+        <div className="lg:col-span-2 bg-white/3 backdrop-blur-xl rounded-3xl border border-slate-700/30 p-8 md:p-12 hover:border-indigo-500/30 transition-all duration-500">
+          <div className="mb-8">
+            <CompanyInfo 
+              logo="/deemply_logo.jpeg"
+              logoAlt="Deemply Logo"
+              position="Lead Full Stack Developer"
+              company="Deemply"
+              period="Mars 2020 - Présent (6 ans)"
+            />
+          </div>
           <div className="space-y-8">
-            <InfoCard 
-              icon="🏢" 
-              title="Entreprise"
-              bgClass="bg-gradient-to-r from-indigo-500/10 to-cyan-500/10"
-              borderClass="border-indigo-500/20"
-              hoverBorderClass="hover:border-indigo-500/40"
-            >
-              <p className="text-gray-300 leading-relaxed mb-3">
-                <span className="text-indigo-400 font-semibold">Deemply</span> est une entreprise technologique fondée en 2012, spécialisée dans la dématérialisation des registres de sécurité et la conformité digitale pour les bâtiments. Basée à La Roche-sur-Yon, l&apos;entreprise compte 10-20 employés et dispose d&apos;une équipe R&D de 9 développeurs.
-              </p>
-              <p className="text-gray-300 leading-relaxed">
-                L&apos;entreprise développe en interne l&apos;ensemble de son écosystème de solutions numériques : solutions web pour exploitants et prestataires, ainsi que des applications mobiles. Sa mission est de fournir &quot;la mémoire digitale de vos bâtiments&quot; avec une plateforme unique qui centralise toutes les obligations réglementaires.
-              </p>
-            </InfoCard>
+              <InfoCard 
+                icon="🏢" 
+                title="Entreprise"
+                bgClass="bg-gradient-to-r from-indigo-500/10 to-cyan-500/10"
+                borderClass="border-indigo-500/20"
+                hoverBorderClass="hover:border-indigo-500/40"
+              >
+                <p className="text-gray-300 leading-relaxed mb-3">
+                  <span className="text-indigo-400 font-semibold">Deemply</span> est une entreprise technologique fondée en 2012, spécialisée dans la dématérialisation des registres de sécurité et la conformité digitale pour les bâtiments. Basée à La Roche-sur-Yon, l&apos;entreprise compte 10-20 employés et dispose d&apos;une équipe R&D de 9 développeurs.
+                </p>
+                <p className="text-gray-300 leading-relaxed">
+                  L&apos;entreprise développe en interne l&apos;ensemble de son écosystème de solutions numériques : solutions web pour exploitants et prestataires, ainsi que des applications mobiles. Sa mission est de fournir &quot;la mémoire digitale de vos bâtiments&quot; avec une plateforme unique qui centralise toutes les obligations réglementaires.
+                </p>
+              </InfoCard>
 
-            <InfoCard 
-              icon="🎯" 
-              title="Contexte & Missions"
-              bgClass="bg-gradient-to-r from-cyan-500/10 to-indigo-500/10"
-              borderClass="border-cyan-500/20"
-              hoverBorderClass="hover:border-cyan-500/40"
-            >
-              <BulletList items={missions} bulletColor="text-cyan-400" bulletIcon="→" />
-            </InfoCard>
+              <InfoCard 
+                icon="🎯" 
+                title="Contexte & Missions"
+                bgClass="bg-gradient-to-r from-cyan-500/10 to-indigo-500/10"
+                borderClass="border-cyan-500/20"
+                hoverBorderClass="hover:border-cyan-500/40"
+              >
+                <BulletList items={missions} bulletColor="text-cyan-400" bulletIcon="→" />
+              </InfoCard>
 
-            <InfoCard 
-              icon="💻" 
-              title="Stack Technique"
-              bgClass="bg-gradient-to-r from-slate-500/10 to-indigo-500/10"
-              borderClass="border-slate-500/20"
-              hoverBorderClass="hover:border-slate-500/40"
-            >
-              <div className="grid md:grid-cols-2 gap-4">
-                {stackItems.map((item, index) => (
-                  <TechStackItem key={index} {...item} />
-                ))}
+              <InfoCard 
+                icon="💻" 
+                title="Stack Technique"
+                bgClass="bg-gradient-to-r from-slate-500/10 to-indigo-500/10"
+                borderClass="border-slate-500/20"
+                hoverBorderClass="hover:border-slate-500/40"
+              >
+                <div className="grid md:grid-cols-2 gap-4">
+                  {stackItems.map((item, index) => (
+                    <TechStackItem key={index} {...item} />
+                  ))}
+                </div>
+              </InfoCard>
+
+              <InfoCard 
+                icon="🔧" 
+                title="Responsabilités"
+                bgClass="bg-gradient-to-r from-emerald-500/10 to-cyan-500/10"
+                borderClass="border-emerald-500/20"
+                hoverBorderClass="hover:border-emerald-500/40"
+              >
+                <BulletList 
+                  items={responsibilities} 
+                  bulletColor="text-emerald-400" 
+                  bulletIcon="✓"
+                  highlightFirst={true}
+                />
+              </InfoCard>
+            </div>
+        </div>
+        
+        <div className="lg:col-span-1 space-y-6">
+          <div className="bg-white/3 backdrop-blur-xl rounded-3xl border border-slate-700/30 p-6 hover:border-indigo-500/30 transition-all duration-500 sticky top-24">
+            <div className="text-center space-y-4">
+              <div className="w-16 h-16 mx-auto rounded-2xl overflow-hidden border-2 border-indigo-500/30 hover:border-indigo-400 transition-all duration-300 hover:scale-105">
+                <Image
+                  src="/deemply_logo.jpeg"
+                  alt="Deemply Logo"
+                  width={64}
+                  height={64}
+                  className="w-full h-full object-cover"
+                />
               </div>
-            </InfoCard>
-
-            <InfoCard 
-              icon="🔧" 
-              title="Responsabilités"
-              bgClass="bg-gradient-to-r from-emerald-500/10 to-cyan-500/10"
-              borderClass="border-emerald-500/20"
-              hoverBorderClass="hover:border-emerald-500/40"
-            >
-              <BulletList 
-                items={responsibilities} 
-                bulletColor="text-emerald-400" 
-                bulletIcon="✓"
-                highlightFirst={true}
-              />
-            </InfoCard>
+              <h3 className="text-xl font-bold text-white">Deemply</h3>
+              <p className="text-indigo-400 font-semibold">Lead Full Stack Developer</p>
+              <div className="pt-4 border-t border-slate-700/30 space-y-2">
+                <p className="text-sm text-gray-400">📅 Mars 2020 - Présent</p>
+                <p className="text-sm text-gray-400">📍 La Roche-sur-Yon</p>
+                <p className="text-sm text-gray-400">👥 10-20 employés</p>
+                <p className="text-sm text-gray-400">💻 9 développeurs R&D</p>
+              </div>
+            </div>
           </div>
         </div>
       </div>

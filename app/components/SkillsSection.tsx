@@ -1,7 +1,11 @@
 import SectionHeader from './ui/SectionHeader';
 import SkillCard from './ui/SkillCard';
 
-export default function SkillsSection() {
+interface SkillsSectionProps {
+  videoSrc?: string;
+}
+
+export default function SkillsSection({ videoSrc }: SkillsSectionProps) {
   const skillCategories = [
     { title: "Développement Frontend", icon: "🎨", skills: ["Vue.js 3", "Vuetify 3", "TypeScript 6", "JavaScript", "HTML5 / CSS3", "NativeScript (mobile)"], bgClass: "from-indigo-500/10 to-indigo-500/5", borderClass: "border-indigo-500/20", hoverBorderClass: "hover:border-indigo-500/40", dotClass: "bg-indigo-400" },
     { title: "Développement Backend", icon: "⚙️", skills: ["PHP 8", "Symfony 7", "API Platform 4", "REST APIs"], bgClass: "from-cyan-500/10 to-cyan-500/5", borderClass: "border-cyan-500/20", hoverBorderClass: "hover:border-cyan-500/40", dotClass: "bg-cyan-400" },
@@ -14,12 +18,29 @@ export default function SkillsSection() {
   ];
 
   return (
-    <div className="max-w-4xl mx-auto">
+    <div className="max-w-7xl mx-auto">
       <SectionHeader title="Compétences" />
-      <div className="grid md:grid-cols-2 gap-6">
-        {skillCategories.map((category, index) => (
-          <SkillCard key={index} {...category} />
-        ))}
+      <div className="flex flex-col md:flex-row gap-8 items-center min-h-[60vh]">
+        <div className="w-full md:w-[70%] grid md:grid-cols-2 gap-6">
+          {skillCategories.map((category, index) => (
+            <SkillCard key={index} {...category} />
+          ))}
+        </div>
+        {videoSrc && (
+          <div className="w-full md:w-[30%] relative h-full">
+            <div className="absolute inset-0 rounded-3xl overflow-hidden">
+              <video
+                src={videoSrc}
+                muted
+                playsInline
+                loop
+                autoPlay
+                className="w-full h-full object-cover"
+              />
+              <div className="absolute inset-0 bg-gradient-to-br from-emerald-900/20 to-cyan-900/20" />
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
