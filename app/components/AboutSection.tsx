@@ -4,7 +4,7 @@ export default function AboutSection() {
   return (
     <div className="max-w-4xl mx-auto">
       <SectionHeader title="À propos de moi" />
-      <div className="bg-white/3 backdrop-blur-xl rounded-3xl border border-slate-700/30 p-8 md:p-12 hover:border-indigo-500/30 transition-all duration-500">
+      <div className="bg-slate-900/40 backdrop-blur-md rounded-3xl border border-slate-700/20 p-8 md:p-12 hover:border-indigo-500/30 transition-all duration-500 shadow-2xl">
         <div className="space-y-6 text-gray-300 text-lg leading-relaxed">
           <p className="hover:text-white transition-colors duration-300">
             Lead Full Stack Developer chez <span className="text-indigo-400 font-semibold">Deemply</span>, spécialisé dans le développement d&apos;applications web modernes et performantes. Je conçois et développe des solutions techniques innovantes pour la gestion de bâtiments et les services immobiliers.

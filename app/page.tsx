@@ -30,7 +30,7 @@ export default function Home() {
       });
       
       // Show/hide about section based on scroll position
-      if (window.scrollY > 200) {
+      if (window.scrollY > 100) {
         setVisibleSections((prev) => new Set([...prev, 'about']));
       } else {
         setVisibleSections((prev) => {
@@ -86,8 +86,8 @@ export default function Home() {
 
       <Navigation activeSection={activeSection} onNavigate={scrollToSection} />
       
-      <div className="relative" style={{ height: '400vh' }}>
-        <ScrollVideo src="/videos/pointing-down.mp4" scrollHeight="400vh" />
+      <div className="relative" style={{ height: '300vh' }}>
+        <ScrollVideo src="/videos/pointing-down.mp4" scrollHeight="300vh" />
         
         {/* Titre initial */}
         <div id="hero-title" className={`absolute top-0 left-0 right-0 h-screen flex items-center justify-center z-10 pointer-events-none transition-all duration-1000 ${
@@ -106,7 +106,7 @@ export default function Home() {
         </div>
         
         {/* AboutSection qui apparaît pendant le scroll */}
-        <section id="about" className={`absolute top-1/3 left-0 right-0 flex items-center justify-center py-16 px-4 transition-all duration-1000 pointer-events-none ${
+        <section id="about" className={`absolute top-1/4 left-0 right-0 flex items-center justify-center py-16 px-4 transition-all duration-1000 pointer-events-none ${
           visibleSections.has('about') ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-20'
         }`}>
           <div className="pointer-events-auto">

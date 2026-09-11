@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 // Add style tag for animations
 const styleId = 'scroll-video-styles';
@@ -27,6 +27,11 @@ type ScrollVideoProps = {
   centerTransparent?: boolean;
 };
 
+// Easing function for smooth transitions
+const easeInOutCubic = (t: number): number => {
+  return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+};
+
 export default function ScrollVideo({
   src,
   scrollHeight = '250vh',
@@ -34,6 +39,7 @@ export default function ScrollVideo({
 }: ScrollVideoProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
+  const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
     const container = containerRef.current;
@@ -41,72 +47,168 @@ export default function ScrollVideo({
     if (!container || !video) return;
 
     let ticking = false;
-    let readyToSeek = true;
-    let seekTimeout: number | undefined;
+    let lastScrollY = 0;
+    let scrollVelocity = 0;
+    let velocitySmoothed = 0;
+    let targetTime = 0;
+    let currentTime = 0;
+    let lastTimestamp = 0;
+    let animationFrameId: number | null = null;
+    let isPlaying = false;
+    let lastUpdateTime = 0;
 
     const prefersReducedMotion = () =>
       window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-    const releaseSeek = () => {
-      readyToSeek = true;
-      if (seekTimeout !== undefined) {
-        window.clearTimeout(seekTimeout);
-        seekTimeout = undefined;
+    const handleLoaded = () => {
+      setIsLoaded(true);
+      if (video.duration) {
+        currentTime = video.currentTime;
+        targetTime = currentTime;
       }
     };
 
-    const updateTime = () => {
-      ticking = false;
+    const updateVelocity = (currentScrollY: number) => {
+      const deltaY = currentScrollY - lastScrollY;
+      const now = performance.now();
+      const deltaTime = now - lastUpdateTime;
+      
+      if (deltaTime > 0) {
+        scrollVelocity = deltaY / deltaTime;
+        // Smooth the velocity with exponential moving average
+        velocitySmoothed = velocitySmoothed * 0.9 + scrollVelocity * 0.1;
+      }
+      
+      lastScrollY = currentScrollY;
+      lastUpdateTime = now;
+    };
 
-      if (!Number.isFinite(video.duration) || video.duration === 0) {
+    const calculateTargetTime = () => {
+      const rect = container.getBoundingClientRect();
+      const scrollableDistance = container.offsetHeight - window.innerHeight;
+      if (scrollableDistance <= 0) return currentTime;
+
+      const scrollPosition = Math.max(0, Math.min(-rect.top, scrollableDistance));
+      const scrollProgress = scrollPosition / scrollableDistance;
+      
+      // Apply easing for smoother feel
+      const easedProgress = easeInOutCubic(scrollProgress);
+      
+      return video.duration * easedProgress;
+    };
+
+    const updateVideo = (timestamp: number) => {
+      if (!video.duration || video.duration === 0) {
+        animationFrameId = requestAnimationFrame(updateVideo);
         return;
       }
 
       if (prefersReducedMotion()) {
+        video.pause();
         video.currentTime = 0;
         return;
       }
 
-      const rect = container.getBoundingClientRect();
-      const scrollableDistance = container.offsetHeight - window.innerHeight;
-      if (scrollableDistance <= 0) return;
+      // Calculate target time based on scroll position
+      targetTime = calculateTargetTime();
 
-      const scrollPosition = Math.max(0, Math.min(-rect.top, scrollableDistance));
-      // Ajuster pour une vitesse plus rapide (x1.5)
-      const nextTime = video.duration * (scrollPosition / scrollableDistance) * 1.5;
+      // Check if user is actively scrolling
+      const isScrolling = Math.abs(velocitySmoothed) > 0.01;
 
-      if (!readyToSeek) return;
-      if (Math.abs(video.currentTime - nextTime) < 0.03) return;
+      if (isScrolling) {
+        // When scrolling, update time based on scroll velocity
+        const playSpeed = Math.min(Math.abs(velocitySmoothed) * 5, 5); // Cap at 5x speed
+        const direction = velocitySmoothed > 0 ? 1 : -1;
+        
+        if (playSpeed > 0.1) {
+          if (!isPlaying) {
+            video.playbackRate = playSpeed;
+            video.play().catch(() => {});
+            isPlaying = true;
+          } else {
+            video.playbackRate = playSpeed;
+          }
+          
+          // Also nudge towards target position
+          const timeDiff = targetTime - currentTime;
+          currentTime += (timeDiff * 0.2) + (direction * playSpeed * 0.033);
+        } else {
+          video.pause();
+          isPlaying = false;
+        }
+      } else {
+        // When not scrolling, smoothly interpolate to target position
+        if (isPlaying) {
+          video.pause();
+          isPlaying = false;
+        }
 
-      readyToSeek = false;
-      video.pause();
-      video.currentTime = nextTime;
-      seekTimeout = window.setTimeout(releaseSeek, 120);
+        const timeDiff = targetTime - currentTime;
+        if (Math.abs(timeDiff) > 0.01) {
+          // Smooth interpolation
+          currentTime += timeDiff * 0.2;
+          video.currentTime = currentTime;
+        }
+      }
+
+      // Clamp to video duration
+      currentTime = Math.max(0, Math.min(currentTime, video.duration));
+
+      animationFrameId = requestAnimationFrame(updateVideo);
     };
 
     const onScroll = () => {
       if (ticking) return;
       ticking = true;
-      window.requestAnimationFrame(updateTime);
+      
+      const currentScrollY = window.scrollY;
+      updateVelocity(currentScrollY);
+      
+      requestAnimationFrame(() => {
+        ticking = false;
+      });
     };
 
-    const handleSeeked = () => {
-      releaseSeek();
+    const startAnimation = () => {
+      if (animationFrameId) cancelAnimationFrame(animationFrameId);
+      lastUpdateTime = performance.now();
+      animationFrameId = requestAnimationFrame(updateVideo);
     };
+
+    const stopAnimation = () => {
+      if (animationFrameId) {
+        cancelAnimationFrame(animationFrameId);
+        animationFrameId = null;
+      }
+      if (isPlaying) {
+        video.pause();
+        isPlaying = false;
+      }
+    };
+
+    // Initialize
+    video.addEventListener('loadedmetadata', handleLoaded);
+    video.addEventListener('canplay', handleLoaded);
+    
+    if (video.readyState >= 1) {
+      handleLoaded();
+    }
 
     window.addEventListener('scroll', onScroll, { passive: true });
     window.addEventListener('resize', onScroll);
-    video.addEventListener('loadedmetadata', onScroll);
-    video.addEventListener('seeked', handleSeeked);
-
-    onScroll();
+    
+    // Start animation loop
+    startAnimation();
 
     return () => {
-      releaseSeek();
+      stopAnimation();
+      video.removeEventListener('loadedmetadata', handleLoaded);
+      video.removeEventListener('canplay', handleLoaded);
       window.removeEventListener('scroll', onScroll);
       window.removeEventListener('resize', onScroll);
-      video.removeEventListener('loadedmetadata', onScroll);
-      video.removeEventListener('seeked', handleSeeked);
+      if (isPlaying) {
+        video.pause();
+      }
     };
   }, [src]);
 

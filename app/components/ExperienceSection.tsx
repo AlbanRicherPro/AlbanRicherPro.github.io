@@ -36,23 +36,11 @@ export default function ExperienceSection({ videoSrc }: ExperienceSectionProps) 
 
   return (
     <div className="max-w-7xl mx-auto relative min-h-screen">
-      {videoSrc && (
-        <div className="absolute inset-0 -z-10 opacity-40 pointer-events-none">
-          <video
-            src={videoSrc}
-            muted
-            playsInline
-            loop
-            autoPlay
-            className="w-full h-full object-cover"
-          />
-          <div className="absolute inset-0 bg-gradient-to-br from-slate-900/85 via-slate-900/60 to-slate-900/85" />
-        </div>
-      )}
       <SectionHeader title="Expérience Professionnelle" />
       
-      <div className="grid lg:grid-cols-3 gap-8 items-start">
-        <div className="lg:col-span-2 bg-white/3 backdrop-blur-xl rounded-3xl border border-slate-700/30 p-8 md:p-12 hover:border-indigo-500/30 transition-all duration-500">
+      <div className="flex flex-col lg:flex-row gap-8 relative">
+        {/* Contenu principal (2/3 de l'écran) */}
+        <div className="flex-1 bg-slate-900/40 backdrop-blur-md rounded-3xl border border-slate-700/20 p-8 md:p-12 hover:border-indigo-500/30 transition-all duration-500 shadow-2xl">
           <div className="mb-8">
             <CompanyInfo 
               logo="/deemply_logo.jpeg"
@@ -119,28 +107,44 @@ export default function ExperienceSection({ videoSrc }: ExperienceSectionProps) 
             </div>
         </div>
         
-        <div className="lg:col-span-1 space-y-6">
-          <div className="bg-white/3 backdrop-blur-xl rounded-3xl border border-slate-700/30 p-6 hover:border-indigo-500/30 transition-all duration-500 sticky top-24">
-            <div className="text-center space-y-4">
-              <div className="w-16 h-16 mx-auto rounded-2xl overflow-hidden border-2 border-indigo-500/30 hover:border-indigo-400 transition-all duration-300 hover:scale-105">
-                <Image
-                  src="/deemply_logo.jpeg"
-                  alt="Deemply Logo"
-                  width={64}
-                  height={64}
-                  className="w-full h-full object-cover"
+        {/* Vidéo sur le côté droit (1/3 de l'écran) - Position sticky */}
+        <div className="lg:w-1/3 hidden lg:block">
+          {videoSrc && (
+            <div className="sticky top-24 space-y-6">
+              <div className="bg-slate-900/40 backdrop-blur-md rounded-3xl border border-slate-700/20 overflow-hidden shadow-2xl">
+                <video
+                  src={videoSrc}
+                  muted
+                  playsInline
+                  loop
+                  autoPlay
+                  className="w-full h-auto object-cover"
                 />
               </div>
-              <h3 className="text-xl font-bold text-white">Deemply</h3>
-              <p className="text-indigo-400 font-semibold">Lead Full Stack Developer</p>
-              <div className="pt-4 border-t border-slate-700/30 space-y-2">
-                <p className="text-sm text-gray-400">📅 Mars 2020 - Présent</p>
-                <p className="text-sm text-gray-400">📍 La Roche-sur-Yon</p>
-                <p className="text-sm text-gray-400">👥 10-20 employés</p>
-                <p className="text-sm text-gray-400">💻 9 développeurs R&D</p>
+              
+              <div className="bg-white/3 backdrop-blur-xl rounded-3xl border border-slate-700/30 p-6 hover:border-indigo-500/30 transition-all duration-500">
+                <div className="text-center space-y-4">
+                  <div className="w-16 h-16 mx-auto rounded-2xl overflow-hidden border-2 border-indigo-500/30 hover:border-indigo-400 transition-all duration-300 hover:scale-105">
+                    <Image
+                      src="/deemply_logo.jpeg"
+                      alt="Deemply Logo"
+                      width={64}
+                      height={64}
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                  <h3 className="text-xl font-bold text-white">Deemply</h3>
+                  <p className="text-indigo-400 font-semibold">Lead Full Stack Developer</p>
+                  <div className="pt-4 border-t border-slate-700/30 space-y-2">
+                    <p className="text-sm text-gray-400">📅 Mars 2020 - Présent</p>
+                    <p className="text-sm text-gray-400">📍 La Roche-sur-Yon</p>
+                    <p className="text-sm text-gray-400">👥 10-20 employés</p>
+                    <p className="text-sm text-gray-400">💻 9 développeurs R&D</p>
+                  </div>
+                </div>
               </div>
             </div>
-          </div>
+          )}
         </div>
       </div>
     </div>
