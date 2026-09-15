@@ -12,6 +12,18 @@ import Footer from './components/Footer';
 export default function Home() {
   const [activeSection, setActiveSection] = useState('');
   const [visibleSections, setVisibleSections] = useState<Set<string>>(new Set());
+  const [titleAnimated, setTitleAnimated] = useState(false);
+  const [scrollProgress, setScrollProgress] = useState(0);
+
+  useEffect(() => {
+    // Force scroll to top on load with multiple methods
+    window.scrollTo(0, 0);
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
+    
+    // Animate title on load
+    setTimeout(() => setTitleAnimated(true), 100);
+  }, []);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -29,15 +41,14 @@ export default function Home() {
         }
       });
       
-      // Show/hide about section based on scroll position
-      if (window.scrollY > 100) {
+      // Calculate scroll progress for hero section (0 to 1)
+      const maxScroll = window.innerHeight * 0.5;
+      const progress = Math.min(window.scrollY / maxScroll, 1);
+      setScrollProgress(progress);
+      
+      // Show about section based on scroll progress
+      if (progress > 0.2) {
         setVisibleSections((prev) => new Set([...prev, 'about']));
-      } else {
-        setVisibleSections((prev) => {
-          const newSet = new Set(prev);
-          newSet.delete('about');
-          return newSet;
-        });
       }
     };
 
@@ -86,13 +97,16 @@ export default function Home() {
 
       <Navigation activeSection={activeSection} onNavigate={scrollToSection} />
       
-      <div className="relative" style={{ height: '300vh' }}>
-        <ScrollVideo src="/videos/pointing-down.mp4" scrollHeight="300vh" />
+      <div className="relative" style={{ height: '200vh' }}>
+        <ScrollVideo src="/videos/pointing-down.mp4" scrollHeight="200vh" />
         
         {/* Titre initial */}
         <div id="hero-title" className={`absolute top-0 left-0 right-0 h-screen flex items-center justify-center z-10 pointer-events-none transition-all duration-1000 ${
-          visibleSections.has('about') ? 'opacity-0 scale-95' : 'opacity-100 scale-100'
-        }`}>
+          titleAnimated ? 'opacity-100 scale-100' : 'opacity-0 scale-95'
+        }`} style={{ 
+          opacity: titleAnimated ? 1 - scrollProgress : 0,
+          transform: titleAnimated ? `scale(${1 - scrollProgress * 0.05})` : 'scale(0.95)'
+        }}>
           <div className="text-center">
             <h1 className="text-5xl md:text-7xl font-bold text-white mb-6">
               <span className="bg-clip-text text-transparent bg-gradient-to-r from-indigo-400 via-cyan-400 to-indigo-400 animate-gradient">
@@ -106,9 +120,10 @@ export default function Home() {
         </div>
         
         {/* AboutSection qui apparaît pendant le scroll */}
-        <section id="about" className={`absolute top-1/4 left-0 right-0 flex items-center justify-center py-16 px-4 transition-all duration-1000 pointer-events-none ${
-          visibleSections.has('about') ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-20'
-        }`}>
+        <section id="about" className={`absolute top-1/3 left-0 right-0 flex items-center justify-center py-16 px-4 transition-all duration-1000 pointer-events-none`} style={{
+          opacity: Math.max(0, (scrollProgress - 0.2) / 0.3),
+          transform: `translateY(${(1 - Math.max(0, (scrollProgress - 0.2) / 0.3)) * 20}px)`
+        }}>
           <div className="pointer-events-auto">
             <AboutSection />
           </div>

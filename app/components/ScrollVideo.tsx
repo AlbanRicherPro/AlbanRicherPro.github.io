@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 
 // Add style tag for animations
 const styleId = 'scroll-video-styles';
@@ -39,7 +39,6 @@ export default function ScrollVideo({
 }: ScrollVideoProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
-  const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
     const container = containerRef.current;
@@ -52,7 +51,6 @@ export default function ScrollVideo({
     let velocitySmoothed = 0;
     let targetTime = 0;
     let currentTime = 0;
-    let lastTimestamp = 0;
     let animationFrameId: number | null = null;
     let isPlaying = false;
     let lastUpdateTime = 0;
@@ -61,7 +59,6 @@ export default function ScrollVideo({
       window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
     const handleLoaded = () => {
-      setIsLoaded(true);
       if (video.duration) {
         currentTime = video.currentTime;
         targetTime = currentTime;
@@ -84,20 +81,29 @@ export default function ScrollVideo({
     };
 
     const calculateTargetTime = () => {
-      const rect = container.getBoundingClientRect();
-      const scrollableDistance = container.offsetHeight - window.innerHeight;
+      const containerHeight = container.offsetHeight;
+      const windowHeight = window.innerHeight;
+      const scrollableDistance = containerHeight - windowHeight;
+      
       if (scrollableDistance <= 0) return currentTime;
 
-      const scrollPosition = Math.max(0, Math.min(-rect.top, scrollableDistance));
-      const scrollProgress = scrollPosition / scrollableDistance;
+      // Get the exact position of the container in the document
+      const containerRect = container.getBoundingClientRect();
+      const containerTopInDocument = containerRect.top + window.scrollY;
+      
+      // Calculate how much we've scrolled from the start of the container
+      const scrollFromContainerStart = window.scrollY - containerTopInDocument;
+      
+      // Calculate progress (0 to 1)
+      const progress = Math.max(0, Math.min(1, scrollFromContainerStart / scrollableDistance));
       
       // Apply easing for smoother feel
-      const easedProgress = easeInOutCubic(scrollProgress);
+      const easedProgress = easeInOutCubic(progress);
       
       return video.duration * easedProgress;
     };
 
-    const updateVideo = (timestamp: number) => {
+    const updateVideo = () => {
       if (!video.duration || video.duration === 0) {
         animationFrameId = requestAnimationFrame(updateVideo);
         return;
@@ -113,14 +119,17 @@ export default function ScrollVideo({
       targetTime = calculateTargetTime();
 
       // Check if user is actively scrolling
-      const isScrolling = Math.abs(velocitySmoothed) > 0.01;
+      const isScrolling = Math.abs(velocitySmoothed) > 0.05;
 
       if (isScrolling) {
-        // When scrolling, update time based on scroll velocity
-        const playSpeed = Math.min(Math.abs(velocitySmoothed) * 5, 5); // Cap at 5x speed
-        const direction = velocitySmoothed > 0 ? 1 : -1;
+        // When scrolling, directly set video time to match scroll position
+        currentTime = targetTime;
+        video.currentTime = currentTime;
         
-        if (playSpeed > 0.1) {
+        // Only play forward with positive playback rate
+        const playSpeed = Math.min(Math.abs(velocitySmoothed) * 3, 2);
+        
+        if (playSpeed > 0.1 && velocitySmoothed > 0) {
           if (!isPlaying) {
             video.playbackRate = playSpeed;
             video.play().catch(() => {});
@@ -128,27 +137,22 @@ export default function ScrollVideo({
           } else {
             video.playbackRate = playSpeed;
           }
-          
-          // Also nudge towards target position
-          const timeDiff = targetTime - currentTime;
-          currentTime += (timeDiff * 0.2) + (direction * playSpeed * 0.033);
         } else {
-          video.pause();
-          isPlaying = false;
+          if (isPlaying) {
+            video.pause();
+            isPlaying = false;
+          }
         }
       } else {
-        // When not scrolling, smoothly interpolate to target position
+        // When not scrolling, pause and sync to exact scroll position
         if (isPlaying) {
           video.pause();
           isPlaying = false;
         }
-
-        const timeDiff = targetTime - currentTime;
-        if (Math.abs(timeDiff) > 0.01) {
-          // Smooth interpolation
-          currentTime += timeDiff * 0.2;
-          video.currentTime = currentTime;
-        }
+        
+        // Direct sync to scroll position
+        currentTime = targetTime;
+        video.currentTime = currentTime;
       }
 
       // Clamp to video duration
