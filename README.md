@@ -1,36 +1,36 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Portfolio d’Alban Richer
 
-## Getting Started
+Portfolio en français construit avec Next.js 16, React 19 et Tailwind CSS 4.
 
-First, run the development server:
+## Démarrer
 
-```bash
+```sh
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Le site est disponible sur http://localhost:3000.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Vérifications
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```sh
+npm run lint
+npx tsc --noEmit
+node --test tests/contact.test.mjs
+npm run build
+```
 
-## Learn More
+Les tests du contact utilisent les mocks natifs de Node.js et n’envoient aucun message. Node.js 22.18+ ou 24 est nécessaire pour importer directement les fichiers TypeScript dans ces tests.
 
-To learn more about Next.js, take a look at the following resources:
+Si Turbopack ne peut pas ouvrir un port pour son worker dans un environnement restreint, la compilation peut être vérifiée avec `npx next build --webpack`. Les polices Geist sont téléchargées par `next/font` à la compilation ; un accès à Google Fonts est donc nécessaire à cette étape.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Organisation
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- `app/page.tsx` compose les sections côté serveur.
+- `app/globals.css` contient la palette charbon/abricot, la typographie, les règles responsive et les durées de mouvement.
+- `Navigation` gère le menu mobile, le focus et les sections actives.
+- `Reveal` partage un observer entre les apparitions. Le contenu est visible sans JavaScript et les animations respectent le mouvement réduit.
+- `HeroVideo` remplace l’ancien contrôleur au scroll par une lecture décorative contrôlée : lecture sur ordinateur et mobile, pause hors écran ou onglet masqué, portrait en alternative et commande de désactivation.
+- `app/lib/contact.ts` vérifie la confirmation du service FormSubmit. Le formulaire conserve la saisie en cas d’échec.
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Les coordonnées professionnelles et l’endpoint FormSubmit existants sont conservés. La réception réelle des messages reste à vérifier séparément.

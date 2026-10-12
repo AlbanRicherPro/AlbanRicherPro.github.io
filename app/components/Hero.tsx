@@ -1,140 +1,92 @@
-'use client';
+import Image from "next/image";
+import Icon from "./ui/Icon";
+import HeroVideo from "./HeroVideo";
 
-import { useEffect, useRef, useState } from 'react';
-import Image from 'next/image';
-
-interface HeroProps {
-  onScrollDown: (sectionId: string) => void;
-}
-
-export default function Hero({ onScrollDown }: HeroProps) {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const [isVisible, setIsVisible] = useState(false);
-
-  useEffect(() => {
-    setIsVisible(true);
-    
-    const container = containerRef.current;
-    if (!container) return;
-
-    // 3D tilt effect on mouse move - réduit pour le conteneur principal
-    const handleMouseMove = (e: MouseEvent) => {
-      const rect = container.getBoundingClientRect();
-      const x = e.clientX - rect.left;
-      const y = e.clientY - rect.top;
-      
-      const centerX = rect.width / 2;
-      const centerY = rect.height / 2;
-      
-      const rotateX = (y - centerY) / 60;
-      const rotateY = (centerX - x) / 60;
-      
-      container.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
-    };
-
-    const handleMouseLeave = () => {
-      container.style.transform = 'perspective(1000px) rotateX(0) rotateY(0)';
-    };
-
-    container.addEventListener('mousemove', handleMouseMove);
-    container.addEventListener('mouseleave', handleMouseLeave);
-
-    return () => {
-      container.removeEventListener('mousemove', handleMouseMove);
-      container.removeEventListener('mouseleave', handleMouseLeave);
-    };
-  }, []);
-
+export default function Hero() {
   return (
-    <section className="min-h-screen flex items-center justify-center px-4 relative overflow-hidden">
-      <div 
-        ref={containerRef} 
-        className={`max-w-4xl mx-auto text-center z-10 transition-all duration-1000 ease-out ${
-          isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-20'
-        }`}
-      >
-        <div className="mb-8 relative inline-block">
-          <div className="w-48 h-48 md:w-64 md:h-64 rounded-full overflow-hidden shadow-2xl mx-auto border-4 border-indigo-500/30 hover:border-indigo-400 transition-all duration-500 hover:scale-105 relative z-10">
+    <section id="home" tabIndex={-1} className="hero section-anchor">
+      <div id="header-sentinel" aria-hidden="true" />
+      <div className="container hero-grid">
+        <div className="hero-copy">
+          <p className="eyebrow hero-enter">
+            <span className="folio-mark" aria-hidden="true">
+              ↳
+            </span>{" "}
+            PORTFOLIO PERSONNEL / DÉVELOPPEUR
+          </p>
+          <h1 className="hero-enter">
+            Alban
+            <br />
+            <span className="hero-surname">
+              Richer<span className="accent">.</span>
+            </span>
+          </h1>
+          <p className="hero-role hero-enter">
+            Lead Full Stack Developer.
+            <br />
+            <span className="role-aside">Le code, et les gens derrière.</span>
+          </p>
+          <p className="hero-description hero-enter">
+            Chez Deemply, je pilote les choix techniques, je développe les
+            fonctionnalités et j’accompagne l’équipe. Mon rôle relie les besoins
+            du produit, l’architecture et la qualité des applications, du
+            frontend au backend.
+          </p>
+          <div className="hero-actions hero-enter">
+            <a href="#experience" className="button button-primary">
+              Mon parcours <Icon name="arrow" />
+            </a>
+            <a href="#contact" className="button button-secondary">
+              On en parle ? <Icon name="arrow" />
+            </a>
+          </div>
+          <div className="hero-meta">
+            <span>
+              <Icon name="pin" /> Aizenay, Pays de la Loire
+            </span>
+            <span>Deemply · depuis 2020</span>
+          </div>
+        </div>
+        <div className="hero-visual hero-enter">
+          <div className="portrait-note" aria-hidden="true">
+            <span>Salut, c’est moi.</span>
+            <svg width="92" height="58" viewBox="0 0 92 58" fill="none">
+              <path
+                d="M5 7c37-12 62 6 65 38m-12-9 13 13 12-14"
+                stroke="currentColor"
+                strokeWidth="1.5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
+          </div>
+          <div className="portrait-frame">
             <Image
               src="/alban-richer.jpg"
-              alt="Alban Richer"
-              width={256}
-              height={256}
-              className="w-full h-full object-cover"
+              alt="Portrait d’Alban Richer"
+              fill
+              sizes="(max-width: 767px) 80vw, 340px"
+              preload
+              className="portrait-image"
             />
+            <HeroVideo src="/videos/pointing-down.mp4" />
           </div>
-          {/* 3D rotating ring effect */}
-          <div className="absolute inset-0 rounded-full border-2 border-indigo-400/30 animate-spin-slow" style={{ animationDuration: '20s' }}></div>
-          <div className="absolute inset-0 rounded-full border-2 border-cyan-400/30 animate-spin-reverse" style={{ animationDuration: '15s' }}></div>
-          <div className="absolute inset-0 rounded-full bg-gradient-to-tr from-indigo-500/20 to-cyan-500/20 blur-xl animate-pulse"></div>
-        </div>
-
-        <h1 className="text-5xl md:text-7xl font-bold text-white mb-6 animate-gradient">
-          <span className="bg-clip-text text-transparent bg-gradient-to-r from-indigo-400 via-cyan-400 to-indigo-400">
-            Alban Richer
+          <div className="portrait-label">
+            <span className="mono">ALBAN, CÔTÉ HUMAIN</span>
+            <Icon name="code" className="portrait-code" />
+          </div>
+          <span className="portrait-side mono" aria-hidden="true">
+            FRONTEND ↔ BACKEND
           </span>
-        </h1>
-
-        <p className="text-2xl md:text-3xl text-gray-300 mb-4 font-light">
-          Lead Full Stack Developer
-        </p>
-
-        <p className="text-lg text-gray-400 mb-8 max-w-2xl mx-auto">
-          Transformant le futur du développement web avec des solutions innovantes et des expériences utilisateur exceptionnelles
-        </p>
-
-        <div className="flex gap-4 justify-center">
-          <button
-            onClick={() => onScrollDown('experience')}
-            className="px-8 py-3 bg-gradient-to-r from-indigo-500 to-cyan-500 text-white rounded-full font-semibold hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-indigo-500/50 hover:shadow-2xl"
-          >
-            Découvrir mon parcours
-          </button>
-          <button
-            onClick={() => onScrollDown('contact')}
-            className="px-8 py-3 border-2 border-indigo-500 text-indigo-400 rounded-full font-semibold hover:bg-indigo-500/10 transition-all duration-300"
-          >
-            Me contacter
-          </button>
         </div>
       </div>
-
-      {/* Scroll indicator - clickable */}
-      <button
-        onClick={() => onScrollDown('about')}
-        className="absolute bottom-10 left-1/2 transform -translate-x-1/2 animate-bounce cursor-pointer hover:scale-110 transition-transform duration-300 z-10"
-        aria-label="Scroll to next section"
-      >
-        <svg className="w-6 h-6 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
-        </svg>
-      </button>
-
-      <style jsx>{`
-        @keyframes spin-slow {
-          from { transform: rotate(0deg); }
-          to { transform: rotate(360deg); }
-        }
-        @keyframes spin-reverse {
-          from { transform: rotate(360deg); }
-          to { transform: rotate(0deg); }
-        }
-        .animate-spin-slow {
-          animation: spin-slow 20s linear infinite;
-        }
-        .animate-spin-reverse {
-          animation: spin-reverse 15s linear infinite;
-        }
-        @keyframes gradient {
-          0% { background-position: 0% 50%; }
-          50% { background-position: 100% 50%; }
-          100% { background-position: 0% 50%; }
-        }
-        .animate-gradient {
-          background-size: 200% 200%;
-          animation: gradient 3s ease infinite;
-        }
-      `}</style>
+      <div className="container hero-bottom">
+        <a href="#about" className="discover-link">
+          À propos de moi
+          <Icon name="down" />
+        </a>
+        <span className="mono">VUE.JS / SYMFONY / TYPESCRIPT</span>
+      </div>
     </section>
   );
 }

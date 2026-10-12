@@ -1,33 +1,68 @@
-import SectionHeader from './ui/SectionHeader';
+import SectionHeader from "./ui/SectionHeader";
+import Reveal from "./ui/Reveal";
+import Icon from "./ui/Icon";
+import DeemplyMascot from "./DeemplyMascot";
 
 export default function AboutSection() {
   return (
-    <div className="max-w-4xl mx-auto">
-      <SectionHeader title="À propos de moi" />
-      <div className="bg-slate-900/40 backdrop-blur-md rounded-3xl border border-slate-700/20 p-8 md:p-12 hover:border-indigo-500/30 transition-all duration-500 shadow-2xl">
-        <div className="space-y-6 text-gray-300 text-lg leading-relaxed">
-          <p className="hover:text-white transition-colors duration-300">
-            Lead Full Stack Developer chez <span className="text-indigo-400 font-semibold">Deemply</span>, spécialisé dans le développement d&apos;applications web modernes et performantes. Je conçois et développe des solutions techniques innovantes pour la gestion de bâtiments et les services immobiliers.
-          </p>
-          <p className="hover:text-white transition-colors duration-300">
-            Avec plus de 6 ans d&apos;expérience en développement full stack, j&apos;expertise les technologies front-end et back-end pour créer des expériences utilisateur fluides et des architectures robustes. Je suis passionné par l&apos;innovation technologique et l&apos;amélioration continue des processus de développement.
-          </p>
-          <p className="hover:text-white transition-colors duration-300">
-            Basé dans la région Pays de la Loire, je travaille au sein d&apos;une équipe dynamique pour transformer le secteur immobilier grâce à des solutions numériques innovantes.
-          </p>
-          <div className="pt-6 border-t border-slate-700/30">
-            <div className="text-center space-y-3">
-              <div className="text-5xl mb-2">👨‍💻</div>
-              <h3 className="text-xl font-bold text-white">Lead Full Stack Developer</h3>
-              <p className="text-indigo-400 font-semibold">Deemply</p>
-              <p className="text-gray-400">Mars 2020 - Présent</p>
-              <div className="pt-3 border-t border-slate-700/30">
-                <p className="text-sm text-gray-400">📍 Pays de la Loire, France</p>
+    <section id="about" tabIndex={-1} className="section section-anchor">
+      <div className="container">
+        <Reveal>
+          <SectionHeader title="À propos" />
+        </Reveal>
+        <div className="about-grid">
+          <div className="about-mascot">
+            <DeemplyMascot />
+          </div>
+          <Reveal className="about-content">
+            <p className="about-lead">
+              Lead developer chez <span className="accent">Deemply</span> depuis
+              mars 2020.
+            </p>
+            <p>
+              Nous développons des applications web et mobiles pour la gestion
+              de bâtiments et les registres de sécurité. Des besoins métier
+              précis, qui demandent des interfaces compréhensibles et un backend
+              fiable.
+            </p>
+            <p>
+              Je travaille sur l’ensemble du produit : développement full stack,
+              architecture, priorités techniques et qualité des livraisons. Je
+              reste impliqué dans les fonctionnalités critiques tout en gardant
+              une vue sur l’évolution du code et sa maintenance.
+            </p>
+            <p>
+              J’accompagne les développeurs dans leurs choix et leur montée en
+              compétences. Avec les équipes commerciales et support, je clarifie
+              les demandes terrain, discute les compromis et organise leur
+              traduction dans le produit.
+            </p>
+            <p>
+              Mes sujets IA vont des assistants de code aux chatbots
+              conversationnels, agents et analyse de documents. Je m’intéresse à
+              leur intégration dans les applications, à la fiabilité des
+              réponses et aux données manipulées.
+            </p>
+            <div className="about-facts">
+              <div>
+                <Icon name="code" />
+                <strong>Full stack</strong>
+                <span>Frontend & backend</span>
+              </div>
+              <div>
+                <Icon name="users" />
+                <strong>Leadership</strong>
+                <span>Équipe & architecture</span>
+              </div>
+              <div>
+                <Icon name="pin" />
+                <strong>Pays de la Loire</strong>
+                <span>France</span>
               </div>
             </div>
-          </div>
+          </Reveal>
         </div>
       </div>
-    </div>
+    </section>
   );
 }
