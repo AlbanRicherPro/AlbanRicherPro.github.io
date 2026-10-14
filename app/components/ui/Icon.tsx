@@ -9,6 +9,8 @@ export type IconName =
   | "check"
   | "users"
   | "cpu"
+  | "message"
+  | "phone"
   | "coffee"
   | "mail"
   | "pin"
@@ -16,8 +18,41 @@ export type IconName =
   | "linkedin"
   | "menu"
   | "close"
+  | "sun"
+  | "moon"
+  | "monitor"
+  | "globe"
   | "down";
 const paths: Record<IconName, React.ReactNode> = {
+  sun: (
+    <>
+      <circle cx="12" cy="12" r="4" />
+      <path d="M12 2v2m0 16v2M2 12h2m16 0h2M5 5l1.5 1.5m11 11L19 19M5 19l1.5-1.5m11-11L19 5" />
+    </>
+  ),
+  moon: <path d="M20.5 14a9 9 0 0 1-10.5-10.5A9 9 0 1 0 20.5 14Z" />,
+  monitor: (
+    <>
+      <rect x="3" y="4" width="18" height="13" rx="2" />
+      <path d="M12 17v4m-4 0h8" />
+    </>
+  ),
+  globe: (
+    <>
+      <circle cx="12" cy="12" r="9" />
+      <ellipse cx="12" cy="12" rx="4" ry="9" />
+      <path d="M3 12h18" />
+    </>
+  ),
+  phone: (
+    <>
+      <rect x="6" y="2" width="12" height="20" rx="3" />
+      <path d="M10 5h4m-2 14h.01" />
+    </>
+  ),
+  message: (
+    <path d="M21 11.5a8.5 8.5 0 0 1-8.5 8.5H3l2.3-4.6A8.5 8.5 0 1 1 21 11.5ZM8 10h8m-8 4h5" />
+  ),
   arrow: (
     <>
       <path d="M5 12h14M13 6l6 6-6 6" />

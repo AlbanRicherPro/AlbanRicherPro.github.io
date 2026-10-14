@@ -1,7 +1,10 @@
 "use client";
 
+import useI18n from "./ui/useI18n";
+
 import { useEffect, useRef, useState } from "react";
 import Icon from "./ui/Icon";
+import PreferenceControls from "./PreferenceControls";
 
 const items = [
   { name: "À propos", id: "about" },
@@ -11,6 +14,7 @@ const items = [
 ];
 
 export default function Navigation() {
+  const { t } = useI18n();
   const [active, setActive] = useState("");
   const [open, setOpen] = useState(false);
   const toggle = useRef<HTMLButtonElement>(null);
@@ -80,7 +84,7 @@ export default function Navigation() {
 
   return (
     <nav
-      aria-label="Navigation principale"
+      aria-label={t("Navigation principale")}
       className="site-header"
       ref={nav}
       onBlur={(event) => {
@@ -96,13 +100,13 @@ export default function Navigation() {
         <a
           className="wordmark"
           href="#home"
-          aria-label="Alban Richer, accueil"
+          aria-label={t("Alban Richer, accueil")}
           onClick={(event) => navigate(event, "home")}
         >
           <span className="brand-mark">
-            a<span>/</span>r
+            a<span>/</span>r<span className="brand-dot" aria-hidden="true" />
           </span>
-          <span className="brand-name">Alban Richer</span>
+          <span className="brand-name">{"Alban Richer"}</span>
         </a>
         <button
           ref={toggle}
@@ -110,7 +114,7 @@ export default function Navigation() {
           className="menu-toggle icon-link"
           aria-expanded={open}
           aria-controls="navigation-links"
-          aria-label={open ? "Fermer le menu" : "Ouvrir le menu"}
+          aria-label={open ? t("Fermer le menu") : t("Ouvrir le menu")}
           onClick={() => setOpen((value) => !value)}
         >
           <Icon name={open ? "close" : "menu"} />
@@ -128,7 +132,7 @@ export default function Navigation() {
               className={`nav-link ${active === item.id ? "is-active" : ""}`}
               onClick={(event) => navigate(event, item.id)}
             >
-              {item.name}
+              {t(item.name)}
             </a>
           ))}
           <div className="nav-socials">
@@ -137,7 +141,7 @@ export default function Navigation() {
               href="https://github.com/AlbanRicherPro"
               target="_blank"
               rel="noopener noreferrer"
-              aria-label="GitHub, nouvel onglet"
+              aria-label={t("GitHub, nouvel onglet")}
             >
               <Icon name="github" />
             </a>
@@ -146,18 +150,19 @@ export default function Navigation() {
               href="https://fr.linkedin.com/in/alban-richer-144085a7"
               target="_blank"
               rel="noopener noreferrer"
-              aria-label="LinkedIn, nouvel onglet"
+              aria-label={t("LinkedIn, nouvel onglet")}
             >
               <Icon name="linkedin" />
             </a>
           </div>
+          <PreferenceControls />
         </div>
       </div>
       <noscript>
         <div className="no-js-nav">
           {items.map((item) => (
             <a key={item.id} href={`#${item.id}`}>
-              {item.name}
+              {t(item.name)}
             </a>
           ))}
         </div>

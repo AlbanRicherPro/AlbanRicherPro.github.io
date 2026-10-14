@@ -1,3 +1,7 @@
+"use client";
+
+import useI18n from "./ui/useI18n";
+
 import Image from "next/image";
 import SectionHeader from "./ui/SectionHeader";
 import Reveal from "./ui/Reveal";
@@ -56,6 +60,7 @@ const missions = [
   },
 ];
 export default function ExperienceSection() {
+  const { t } = useI18n();
   return (
     <section
       id="experience"
@@ -65,8 +70,10 @@ export default function ExperienceSection() {
       <div className="container">
         <Reveal>
           <SectionHeader
-            title="Expérience"
-            subtitle="Depuis mars 2020 chez Deemply : développement full stack, pilotage technique et accompagnement de l’équipe."
+            title={t("Expérience")}
+            subtitle={t(
+              "Depuis mars 2020 chez Deemply : développement full stack, pilotage technique et accompagnement de l’équipe.",
+            )}
           />
         </Reveal>
         <div className="experience-grid">
@@ -74,34 +81,35 @@ export default function ExperienceSection() {
             <div className="company-logo">
               <Image
                 src="/deemply-logo.svg"
-                alt="Deemply"
+                alt={"Deemply"}
                 width={138}
                 height={29}
               />
             </div>
-            <p className="eyebrow">MARS 2020 — PRÉSENT</p>
+            <p className="eyebrow">{t("MARS 2020 — PRÉSENT")}</p>
             <h3>
-              Lead Full Stack
+              {"Lead Full Stack"}
               <br />
-              Developer
+              {"Developer"}
             </h3>
-            <p className="company-name">Deemply</p>
+            <p className="company-name">{"Deemply"}</p>
             <p className="company-description">
-              Des solutions numériques pour centraliser les obligations
-              réglementaires et simplifier la conformité des bâtiments.
-              L’écosystème couvre les usages web et mobiles des exploitants et
-              des prestataires.
+              {t(
+                "Des solutions numériques pour centraliser les obligations réglementaires et simplifier la conformité des bâtiments. L’écosystème couvre les usages web et mobiles des exploitants et des prestataires.",
+              )}
             </p>
             <p className="location">
-              <Icon name="pin" /> La Roche-sur-Yon
+              <Icon name="pin" /> {"La Roche-sur-Yon"}
             </p>
             <div className="company-stack">
-              <span>Vue.js</span>
-              <span>TypeScript</span>
-              <span>PHP</span>
-              <span>Symfony</span>
-              <span>API Platform</span>
-              <span>Docker</span>
+              <span>{"Vue.js"}</span>
+              <span>{"TypeScript"}</span>
+              <span>{"Symfony"}</span>
+              <span>{"API Platform"}</span>
+              <span>{"GitHub"}</span>
+              <span>{"ClickUp"}</span>
+              <span>{"Claude Code"}</span>
+              <span>{"Docker"}</span>
             </div>
           </Reveal>
           <div className="missions">
@@ -109,11 +117,11 @@ export default function ExperienceSection() {
               <Reveal key={title}>
                 <article className="mission">
                   <div>
-                    <h3>{title}</h3>
-                    <p>{description}</p>
+                    <h3>{t(title)}</h3>
+                    <p>{t(description)}</p>
                     <ul className="mission-points">
                       {points.map((point) => (
-                        <li key={point}>{point}</li>
+                        <li key={point}>{t(point)}</li>
                       ))}
                     </ul>
                   </div>
@@ -124,8 +132,9 @@ export default function ExperienceSection() {
               <div className="experience-note">
                 <Icon name="layers" />
                 <p>
-                  En lien avec les équipes commerciales et support, pour aligner
-                  les solutions techniques avec les besoins des utilisateurs.
+                  {t(
+                    "En lien avec les équipes commerciales et support, pour aligner les solutions techniques avec les besoins des utilisateurs.",
+                  )}
                 </p>
               </div>
             </Reveal>

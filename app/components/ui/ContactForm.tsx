@@ -1,5 +1,7 @@
 "use client";
 
+import useI18n from "./useI18n";
+
 import { useEffect, useRef, useState } from "react";
 import Icon from "./Icon";
 import { sendContactMessage } from "../../lib/contact";
@@ -39,6 +41,7 @@ const fields = [
 ] as const;
 
 export default function ContactForm() {
+  const { t } = useI18n();
   const [data, setData] = useState(initial);
   const [submitting, setSubmitting] = useState(false);
   const [status, setStatus] = useState<"idle" | "success" | "error">("idle");
@@ -69,13 +72,13 @@ export default function ContactForm() {
   function field(item: (typeof fields)[number]) {
     return (
       <div className="form-field" key={item.name}>
-        <label htmlFor={item.name}>{item.label}</label>
+        <label htmlFor={item.name}>{t(item.label)}</label>
         <input
           id={item.name}
           name={item.name}
           type={item.name === "email" ? "email" : "text"}
           autoComplete={item.autocomplete}
-          placeholder={item.placeholder}
+          placeholder={t(item.placeholder)}
           value={data[item.name]}
           onChange={(event) =>
             setData((previous) => ({
@@ -95,12 +98,12 @@ export default function ContactForm() {
       <div className="form-row">{fields.slice(0, 2).map(field)}</div>
       {fields.slice(2).map(field)}
       <div className="form-field">
-        <label htmlFor="message">Message</label>
+        <label htmlFor="message">{"Message"}</label>
         <textarea
           id="message"
           name="message"
           rows={5}
-          placeholder="Votre idée, votre question…"
+          placeholder={t("Votre idée, votre question…")}
           value={data.message}
           onChange={(event) =>
             setData((previous) => ({
@@ -118,18 +121,19 @@ export default function ContactForm() {
         type="submit"
         disabled={submitting}
       >
-        {submitting ? "Envoi en cours…" : "Envoyer le message"}
+        {submitting ? t("Envoi en cours…") : t("Envoyer le message")}
         <Icon name="arrow" />
       </button>
       <p className="form-privacy">
-        Votre message est transmis via FormSubmit pour permettre une réponse.
-        Vous pouvez aussi{" "}
+        {t(
+          "Votre message est transmis via FormSubmit pour permettre une réponse. Vous pouvez aussi",
+        )}{" "}
         <a
           href="https://fr.linkedin.com/in/alban-richer-144085a7"
           target="_blank"
           rel="noopener noreferrer"
         >
-          me contacter sur LinkedIn
+          {t("me contacter sur LinkedIn")}
         </a>
         .
       </p>
@@ -140,16 +144,18 @@ export default function ContactForm() {
         aria-atomic="true"
       >
         {status === "success" &&
-          "Merci ! Votre message a été envoyé. Je vous répondrai dès que possible."}
+          t(
+            "Merci ! Votre message a été envoyé. Je vous répondrai dès que possible.",
+          )}
         {status === "error" && (
           <>
-            L’envoi a échoué. Votre message est conservé : réessayez ou{" "}
+            {t("L’envoi a échoué. Votre message est conservé : réessayez ou")}{" "}
             <a
               href="https://fr.linkedin.com/in/alban-richer-144085a7"
               target="_blank"
               rel="noopener noreferrer"
             >
-              contactez-moi sur LinkedIn
+              {t("contactez-moi sur LinkedIn")}
             </a>
             .
           </>

@@ -3,12 +3,16 @@
 import { useEffect, useRef, useState } from "react";
 
 // The decorative video plays on all screen sizes when motion is allowed.
-// The server-rendered portrait underneath remains the fallback in every state.
-export default function HeroVideo({ src }: { src: string }) {
+// The server-rendered first frame underneath remains the fallback in every state.
+export default function HeroVideo({
+  src,
+  poster,
+}: {
+  src: string;
+  poster: string;
+}) {
   const ref = useRef<HTMLVideoElement>(null);
-  const [playing, setPlaying] = useState(false);
   const [hasFrame, setHasFrame] = useState(false);
-  const [paused, setPaused] = useState(false);
   useEffect(() => {
     const video = ref.current;
     if (!video) return;
@@ -20,11 +24,9 @@ export default function HeroVideo({ src }: { src: string }) {
     function sync() {
       if (!video) return;
       const request = ++version;
-      const allowed =
-        !motion.matches && !document.hidden && visible && !failed && !paused;
+      const allowed = !motion.matches && !document.hidden && visible && !failed;
       if (!allowed) {
         video.pause();
-        setPlaying(false);
         return;
       }
       if (!video.getAttribute("src")) {
@@ -35,13 +37,10 @@ export default function HeroVideo({ src }: { src: string }) {
         .play()
         .then(() => {
           if (!disposed && request === version) {
-            setPlaying(true);
             setHasFrame(true);
           }
         })
-        .catch(() => {
-          if (!disposed && request === version) setPlaying(false);
-        });
+        .catch(() => {});
     }
     const onError = () => {
       failed = true;
@@ -68,33 +67,18 @@ export default function HeroVideo({ src }: { src: string }) {
       document.removeEventListener("visibilitychange", sync);
       video.removeEventListener("error", onError);
     };
-  }, [src, paused]);
+  }, [src]);
   return (
-    <>
-      <video
-        ref={ref}
-        muted
-        playsInline
-        loop
-        preload="none"
-        disablePictureInPicture
-        aria-hidden="true"
-        className={`hero-video ${hasFrame ? "has-frame" : ""}`}
-      />
-      {(hasFrame || playing || paused) && (
-        <button
-          type="button"
-          className="video-toggle"
-          onClick={() => setPaused((value) => !value)}
-          aria-label={
-            paused
-              ? "Activer la vidéo décorative"
-              : "Désactiver la vidéo décorative"
-          }
-        >
-          {paused ? "Activer la vidéo" : "Pause vidéo"}
-        </button>
-      )}
-    </>
+    <video
+      ref={ref}
+      poster={poster}
+      muted
+      playsInline
+      loop
+      preload="none"
+      disablePictureInPicture
+      aria-hidden="true"
+      className={`hero-video ${hasFrame ? "has-frame" : ""}`}
+    />
   );
 }
