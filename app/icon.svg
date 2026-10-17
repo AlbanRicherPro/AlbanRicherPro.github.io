@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">
+  <style>
+    .background { fill: #f6f2e9; }
+    .letters { fill: #252c28; }
+    .accent { fill: #c96a3e; }
+    @media (prefers-color-scheme: dark) {
+      .background { fill: #171b1b; }
+      .letters { fill: #f2eee5; }
+      .accent { fill: #ffae86; }
+    }
+  </style>
+  <rect class="background" width="256" height="256" rx="42" />
+  <g class="letters" font-family="Arial, Helvetica, sans-serif" font-size="142" font-weight="700">
+    <text x="21" y="174">a</text>
+    <text x="126" y="174">r</text>
+  </g>
+  <path class="accent" d="M93 174h20l32-104h-20z" />
+  <path class="accent" d="M188 154h21v21h-21z" />
+</svg>

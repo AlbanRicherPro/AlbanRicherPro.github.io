@@ -43,3 +43,5 @@ Le cœur vendéen du footer est adapté du [visuel de Wikicontributeur](https://
 Le thème suit `prefers-color-scheme` (clair/sombre). La langue suit la première préférence `fr` ou `en` de `navigator.languages`, avec l’anglais comme repli pour les autres langues. Le HTML exporté reste en français ; `useSyncExternalStore` applique la préférence après l’hydratation, puis suit `languagechange`, sans modifier les valeurs saisies dans le formulaire.
 
 Les sélecteurs de la navigation permettent de choisir le thème (`Système`, `Clair`, `Sombre`) et la langue (`Navigateur`, `Français`, `English`). Les choix explicites sont conservés localement ; les modes automatiques rétablissent les préférences du système et du navigateur.
+
+Le favicon SVG (`app/icon.svg`) adapte son fond et ses lettres au thème clair/sombre du navigateur via `prefers-color-scheme`. Le favicon ICO sert de repli avec un fond sombre contrasté. Cette préférence suit l’interface du navigateur, indépendamment du thème choisi pour la page.
