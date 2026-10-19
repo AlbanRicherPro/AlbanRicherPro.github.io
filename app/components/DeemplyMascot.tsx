@@ -17,14 +17,64 @@ export default function DeemplyMascot() {
   const scene = useRef<HTMLDivElement>(null);
   const [moving, setMoving] = useState(false);
   const [hearts, setHearts] = useState(false);
+  const [greeted, setGreeted] = useState(false);
 
   useEffect(() => {
     const element = scene.current;
     if (!element) return;
     const preference = window.matchMedia("(prefers-reduced-motion: reduce)");
     let visible = false;
-    const sync = () =>
-      setMoving(visible && !document.hidden && !preference.matches);
+    let greetedOnce = false;
+    let frame = 0;
+    const region = element.closest("section");
+    const resetLook = () => {
+      cancelAnimationFrame(frame);
+      frame = 0;
+      element.style.setProperty("--look-x", "0px");
+      element.style.setProperty("--look-y", "0px");
+    };
+    const sync = () => {
+      const allowed = visible && !document.hidden && !preference.matches;
+      setMoving(allowed);
+      if (!allowed) resetLook();
+      if (allowed && !greetedOnce) {
+        greetedOnce = true;
+        setGreeted(true);
+      }
+    };
+    const look = (event: PointerEvent) => {
+      if (
+        event.pointerType !== "mouse" ||
+        !visible ||
+        document.hidden ||
+        preference.matches
+      )
+        return;
+      cancelAnimationFrame(frame);
+      const { clientX, clientY } = event;
+      frame = requestAnimationFrame(() => {
+        frame = 0;
+        const bounds = element.getBoundingClientRect();
+        const x = Math.max(
+          -1,
+          Math.min(
+            1,
+            (clientX - bounds.left - bounds.width / 2) / bounds.width,
+          ),
+        );
+        const y = Math.max(
+          -1,
+          Math.min(
+            1,
+            (clientY - bounds.top - bounds.height / 2) / bounds.height,
+          ),
+        );
+        element.style.setProperty("--look-x", `${x * -10}px`);
+        element.style.setProperty("--look-y", `${y * 7}px`);
+      });
+    };
+    region?.addEventListener("pointermove", look);
+    region?.addEventListener("pointerleave", resetLook);
     const observer = new IntersectionObserver(
       ([entry]) => {
         visible = entry.isIntersecting;
@@ -37,32 +87,18 @@ export default function DeemplyMascot() {
     preference.addEventListener("change", sync);
     return () => {
       observer.disconnect();
+      cancelAnimationFrame(frame);
+      region?.removeEventListener("pointermove", look);
+      region?.removeEventListener("pointerleave", resetLook);
       document.removeEventListener("visibilitychange", sync);
       preference.removeEventListener("change", sync);
     };
   }, []);
 
-  function look(event: React.PointerEvent<HTMLButtonElement>) {
-    if (event.pointerType !== "mouse" || !moving) return;
-    const bounds = event.currentTarget.getBoundingClientRect();
-    scene.current?.style.setProperty(
-      "--look-x",
-      `${((event.clientX - bounds.left) / bounds.width - 0.5) * -8}px`,
-    );
-    scene.current?.style.setProperty(
-      "--look-y",
-      `${((event.clientY - bounds.top) / bounds.height - 0.5) * 6}px`,
-    );
-  }
-  function resetLook() {
-    scene.current?.style.setProperty("--look-x", "0px");
-    scene.current?.style.setProperty("--look-y", "0px");
-  }
-
   return (
     <div
       ref={scene}
-      className={`mascot-scene ${moving ? "is-moving" : ""} ${hearts ? "has-hearts" : ""}`}
+      className={`mascot-scene ${moving ? "is-moving" : ""} ${hearts ? "has-hearts" : ""} ${greeted ? "has-greeted" : ""}`}
     >
       <button
         type="button"
@@ -70,56 +106,59 @@ export default function DeemplyMascot() {
         aria-pressed={hearts}
         aria-label={t("Afficher les yeux en cœur de la mascotte Deemply")}
         onClick={() => setHearts((value) => !value)}
-        onPointerMove={look}
-        onPointerLeave={resetLook}
       >
-        <span className="mascot-art">
-          <Image
-            src="/deemply-mascot.webp"
-            alt={t("Mascotte Deemply")}
-            width={1000}
-            height={905}
-            sizes="(max-width: 767px) 280px, 360px"
-            className="mascot-body"
-          />
-          <svg
-            className="mascot-eyes"
-            viewBox="0 0 1000 905"
-            aria-hidden="true"
-          >
-            <defs>
-              <pattern
-                id={`${id}-dots`}
-                width="17"
-                height="17"
-                patternUnits="userSpaceOnUse"
-              >
-                <circle cx="8.5" cy="8.5" r="4.2" fill="#d9adf4" />
-              </pattern>
-              <clipPath id={`${id}-neutral`}>
-                <ellipse cx="203" cy="425" rx="86" ry="123" />
-                <ellipse cx="487" cy="425" rx="106" ry="123" />
-              </clipPath>
-              <clipPath id={`${id}-love`}>
-                <path
-                  d={HEART_PATH}
-                  transform="translate(203 425) scale(94 127)"
-                />
-                <path
-                  d={HEART_PATH}
-                  transform="translate(487 425) scale(116 127)"
-                />
-              </clipPath>
-            </defs>
-            <g className="mascot-neutral" clipPath={`url(#${id}-neutral)`}>
-              <rect width="1000" height="905" fill={`url(#${id}-dots)`} />
-            </g>
-            <g className="mascot-love" clipPath={`url(#${id}-love)`}>
-              <rect width="1000" height="905" fill={`url(#${id}-dots)`} />
-            </g>
-          </svg>
+        <span className="mascot-greeting">
+          <span className="mascot-art">
+            <Image
+              src="/deemply-mascot.webp"
+              alt={t("Mascotte Deemply")}
+              width={1000}
+              height={905}
+              sizes="(max-width: 767px) 280px, 360px"
+              className="mascot-body"
+            />
+            <svg
+              className="mascot-eyes"
+              viewBox="0 0 1000 905"
+              aria-hidden="true"
+            >
+              <defs>
+                <pattern
+                  id={`${id}-dots`}
+                  width="17"
+                  height="17"
+                  patternUnits="userSpaceOnUse"
+                >
+                  <circle cx="8.5" cy="8.5" r="4.2" fill="#d9adf4" />
+                </pattern>
+                <clipPath id={`${id}-neutral`}>
+                  <ellipse cx="203" cy="425" rx="86" ry="123" />
+                  <ellipse cx="487" cy="425" rx="106" ry="123" />
+                </clipPath>
+                <clipPath id={`${id}-love`}>
+                  <path
+                    d={HEART_PATH}
+                    transform="translate(203 425) scale(94 127)"
+                  />
+                  <path
+                    d={HEART_PATH}
+                    transform="translate(487 425) scale(116 127)"
+                  />
+                </clipPath>
+              </defs>
+              <g className="mascot-neutral" clipPath={`url(#${id}-neutral)`}>
+                <rect width="1000" height="905" fill={`url(#${id}-dots)`} />
+              </g>
+              <g className="mascot-love" clipPath={`url(#${id}-love)`}>
+                <rect width="1000" height="905" fill={`url(#${id}-dots)`} />
+              </g>
+            </svg>
+          </span>
         </span>
       </button>
+      <span className="mascot-hello" aria-hidden="true">
+        {t("Salut !")}
+      </span>
       <div className="mascot-caption">
         <p>{t("Deemply, mon quotidien depuis 2020.")}</p>
         <a

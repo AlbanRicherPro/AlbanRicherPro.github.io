@@ -22,7 +22,14 @@ export default function AboutSection() {
           <Reveal className="about-content">
             <p className="about-lead">
               {t("Lead developer chez")}{" "}
-              <span className="accent">{"Deemply"}</span>{" "}
+              <a
+                className="accent deemply-name"
+                href="https://www.deemply.com/"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Deemply
+              </a>{" "}
               {t("depuis mars 2020.")}
             </p>
             <p>
@@ -62,6 +69,10 @@ export default function AboutSection() {
                 <span>{"France"}</span>
               </div>
             </div>
+            <a className="about-demo-link" href="#work-demo">
+              {t("Voir un parcours concret")}
+              <Icon name="arrow" />
+            </a>
           </Reveal>
         </div>
       </div>

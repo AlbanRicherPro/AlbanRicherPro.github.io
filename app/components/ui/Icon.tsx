@@ -22,8 +22,37 @@ export type IconName =
   | "moon"
   | "monitor"
   | "globe"
+  | "building"
+  | "wrench"
+  | "calendar"
+  | "history"
+  | "reset"
   | "down";
 const paths: Record<IconName, React.ReactNode> = {
+  building: (
+    <>
+      <path d="M4 21V7l8-4 8 4v14M2 21h20M9 21v-5h6v5M8 9h1m6 0h1m-8 3h1m6 0h1" />
+    </>
+  ),
+  wrench: (
+    <path d="M14 6a5 5 0 0 0-6 6L3 17a3 3 0 0 0 4 4l5-5a5 5 0 0 0 6-6l-4 4-4-4 4-4Z" />
+  ),
+  calendar: (
+    <>
+      <rect x="3" y="5" width="18" height="16" rx="2" />
+      <path d="M7 3v4m10-4v4M3 11h18m-14 4h3m4 0h3" />
+    </>
+  ),
+  history: (
+    <>
+      <path d="M3 11a9 9 0 1 1 2 7M3 4v7h7m2-4v6l4 2" />
+    </>
+  ),
+  reset: (
+    <>
+      <path d="M3 10a9 9 0 1 1 1 7M3 3v7h7" />
+    </>
+  ),
   sun: (
     <>
       <circle cx="12" cy="12" r="4" />

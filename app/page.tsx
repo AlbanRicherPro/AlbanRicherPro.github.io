@@ -10,6 +10,8 @@ import ExperienceSection from "./components/ExperienceSection";
 import SkillsSection from "./components/SkillsSection";
 import ContactSection from "./components/ContactSection";
 import Footer from "./components/Footer";
+import WorkDemo from "./components/WorkDemo";
+import ScrollJourney from "./components/ScrollJourney";
 
 export default function Home() {
   const { t } = useI18n();
@@ -20,9 +22,11 @@ export default function Home() {
         {t("Aller au contenu")}
       </a>
       <Navigation />
+      <ScrollJourney />
       <main id="main" tabIndex={-1} className="section-anchor">
         <Hero />
         <AboutSection />
+        <WorkDemo />
         <ExperienceSection />
         <SkillsSection />
         <ContactSection />

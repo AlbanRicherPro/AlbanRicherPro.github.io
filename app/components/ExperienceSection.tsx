@@ -113,8 +113,8 @@ export default function ExperienceSection() {
             </div>
           </Reveal>
           <div className="missions">
-            {missions.map(({ title, description, points }) => (
-              <Reveal key={title}>
+            {missions.map(({ title, description, points }, index) => (
+              <Reveal key={title} delay={Math.min(index * 50, 160)}>
                 <article className="mission">
                   <div>
                     <h3>{t(title)}</h3>

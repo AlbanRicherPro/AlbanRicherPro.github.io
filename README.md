@@ -45,3 +45,5 @@ Le thème suit `prefers-color-scheme` (clair/sombre). La langue suit la premièr
 Les sélecteurs de la navigation permettent de choisir le thème (`Système`, `Clair`, `Sombre`) et la langue (`Navigateur`, `Français`, `English`). Les choix explicites sont conservés localement ; les modes automatiques rétablissent les préférences du système et du navigateur.
 
 Le favicon SVG (`app/icon.svg`) adapte son fond et ses lettres au thème clair/sombre du navigateur via `prefers-color-scheme`. Le favicon ICO sert de repli avec un fond sombre contrasté. Cette préférence suit l’interface du navigateur, indépendamment du thème choisi pour la page.
+
+La section « En pratique » est une démonstration locale fictive : sélection d’un bâtiment, planification d’une intervention, résolution et historique. Les choix frontend/backend/architecture et les contrats affichés sont illustratifs, sans lien avec le code de production de Deemply. Aucun appel réseau n’est déclenché par ce parcours. La mascotte salue une fois à son apparition, suit la souris dans À propos et réagit aux liens Deemply. Le fil de lecture et les transitions respectent la préférence de réduction des animations.

@@ -215,9 +215,10 @@ export default function SkillsSection() {
           </div>
         </Reveal>
         <div className="skills-domains">
-          {domains.map((domain) => (
+          {domains.map((domain, index) => (
             <Reveal
               key={domain.id}
+              delay={(index % 2) * 80}
               className={`domain-slot domain-slot-${domain.id}`}
             >
               <article className={`skill-domain skill-domain-${domain.id}`}>
