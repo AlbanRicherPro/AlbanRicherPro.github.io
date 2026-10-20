@@ -13,6 +13,11 @@ export default function Hero() {
   return (
     <section id="home" tabIndex={-1} className="hero section-anchor">
       <div id="header-sentinel" aria-hidden="true" />
+      <div className="hero-drafting" aria-hidden="true">
+        <span className="draft-orbit orbit-one" />
+        <span className="draft-orbit orbit-two" />
+        <span className="draft-slash">/</span>
+      </div>
       <div className="container hero-grid">
         <div className="hero-copy">
           <h1 className="hero-enter">
@@ -46,6 +51,11 @@ export default function Hero() {
               {t("On en parle ?")} <Icon name="arrow" />
             </a>
           </div>
+          <a href="#approach" className="hero-approach-link hero-enter">
+            <span className="approach-link-dot" aria-hidden="true" />
+            {t("Interface, architecture, équipe")}
+            <Icon name="arrow" />
+          </a>
           <div className="hero-meta">
             <span>
               <Icon name="pin" /> {"Aizenay, Pays de la Loire"}

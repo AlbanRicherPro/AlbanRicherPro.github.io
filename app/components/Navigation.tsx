@@ -8,6 +8,7 @@ import PreferenceControls from "./PreferenceControls";
 
 const items = [
   { name: "À propos", id: "about" },
+  { name: "Approche", id: "approach" },
   { name: "Expérience", id: "experience" },
   { name: "Compétences", id: "skills" },
   { name: "Contact", id: "contact" },
