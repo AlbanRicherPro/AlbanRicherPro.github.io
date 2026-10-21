@@ -9,6 +9,7 @@
   --background: #171b1b;
   --foreground: #f2eee5;
   --surface: #202525;
+  --section-surface: #1b2020;
   --muted: #acb5af;
   --accent: var(--brand-accent);
   --cyan: #b6cbbd;
@@ -17,6 +18,19 @@
   --motion-base: 240ms;
   --motion-reveal: 480ms;
   --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --font-editorial: Georgia, serif;
+  --type-section: clamp(42px, 5.5vw, 64px);
+  --type-card: clamp(24px, 2.4vw, 30px);
+  --type-subheading: clamp(20px, 2vw, 24px);
+  --type-body: 14px;
+  --type-small: 12px;
+  --type-caption: 11px;
+  --leading-body: 1.8;
+  --tracking-title: -.045em;
+  --radius-panel: 16px;
+  --radius-control: 8px;
+  --radius-tag: 6px;
+  --section-space: clamp(64px, 8vw, 112px);
 }
 @theme inline {
   --color-background: var(--background);
@@ -42,7 +56,7 @@ body {
   line-height: 1.65;
 }
 ::selection {
-  background: #ffae8640;
+  background: color-mix(in srgb, var(--accent) 30%, transparent);
   color: white;
 }
 a {
@@ -113,7 +127,7 @@ textarea:focus-visible {
   padding: 12px 18px;
   background: var(--accent);
   color: var(--background);
-  border-radius: 8px;
+  border-radius: var(--radius-control);
   transform: translateY(-160%);
 }
 .skip-link:focus {
@@ -299,8 +313,8 @@ textarea:focus-visible {
 .hero-description {
   max-width: 440px;
   color: var(--muted);
-  font-size: 14px;
-  line-height: 1.9;
+  font-size: var(--type-body);
+  line-height: var(--leading-body);
   margin: 24px 0;
 }
 .hero-actions {
@@ -314,9 +328,9 @@ textarea:focus-visible {
   justify-content: center;
   gap: 18px;
   min-height: 48px;
-  border-radius: 3px;
+  border-radius: var(--radius-control);
   padding: 12px 20px;
-  font-size: 12px;
+  font-size: var(--type-small);
   font-weight: 600;
   border: 1px solid transparent;
   cursor: pointer;
@@ -389,7 +403,7 @@ textarea:focus-visible {
   pointer-events: none;
 }
 .portrait-note > span {
-  font-family: Georgia, serif;
+  font-family: var(--font-editorial);
   font-style: italic;
   font-size: 24px;
 }
@@ -497,7 +511,7 @@ textarea:focus-visible {
   }
 }
 .section {
-  padding-block: 112px;
+  padding-block: var(--section-space);
 }
 .section + .section {
   border-top: 1px solid var(--line);
@@ -506,19 +520,27 @@ textarea:focus-visible {
   margin-bottom: 40px;
 }
 .section-header h2 {
-  font-size: clamp(32px, 4vw, 48px);
-  letter-spacing: -0.045em;
-  line-height: 1.16;
+  font-size: var(--type-section);
+  letter-spacing: var(--tracking-title);
+  line-height: 1.1;
   font-weight: 500;
   margin: 0;
   max-width: 680px;
   text-wrap: balance;
 }
+.section-header h2::after {
+  content: "";
+  display: inline-block;
+  width: .12em;
+  height: .12em;
+  background: var(--accent);
+  margin-left: .08em;
+}
 .section-description {
   color: var(--muted);
-  font-size: 15px;
+  font-size: var(--type-body);
   max-width: 540px;
-  line-height: 1.9;
+  line-height: var(--leading-body);
   margin-top: 20px;
 }
 .about-grid {
@@ -535,8 +557,8 @@ textarea:focus-visible {
 }
 .about-content > p {
   color: var(--muted);
-  font-size: 14px;
-  line-height: 1.9;
+  font-size: var(--type-body);
+  line-height: var(--leading-body);
   margin-bottom: 20px;
 }
 .about-content .about-lead {
@@ -570,7 +592,7 @@ textarea:focus-visible {
   font-size: 10px;
 }
 .experience-section {
-  background: #ffffff02;
+  background: var(--background);
 }
 .experience-grid {
   display: grid;
@@ -582,7 +604,7 @@ textarea:focus-visible {
 .company-panel {
   background: var(--surface);
   border: 1px solid var(--line);
-  border-radius: 4px;
+  border-radius: var(--radius-panel);
   padding: 32px;
 }
 .company-logo {
@@ -599,9 +621,9 @@ textarea:focus-visible {
   margin-bottom: 16px;
 }
 .company-panel h3 {
-  font-size: 26px;
-  line-height: 1.3;
-  letter-spacing: -0.03em;
+  font-size: var(--type-card);
+  line-height: 1.2;
+  letter-spacing: var(--tracking-title);
   font-weight: 500;
 }
 .company-name {
@@ -611,7 +633,8 @@ textarea:focus-visible {
 }
 .company-description {
   color: var(--muted);
-  font-size: 13px;
+  font-size: var(--type-body);
+  line-height: var(--leading-body);
   margin-top: 20px;
 }
 .location {
@@ -636,12 +659,12 @@ textarea:focus-visible {
   border-top: 1px solid var(--line);
 }
 .company-stack span {
-  font-size: 10px;
-  color: #c7cfc9;
-  background: #ffffff04;
+  font-size: var(--type-caption);
+  color: var(--muted);
+  background: transparent;
   border: 1px solid var(--line);
   padding: 5px 9px;
-  border-radius: 5px;
+  border-radius: var(--radius-tag);
 }
 .mission {
   display: flex;
@@ -657,15 +680,15 @@ textarea:focus-visible {
   flex: 1;
 }
 .mission > svg {
-  color: #94a199;
+  color: var(--accent);
   flex-shrink: 0;
   margin-top: 7px;
   width: 16px;
 }
 .mission h3 {
-  font-size: 20px;
+  font-size: var(--type-subheading);
   font-weight: 500;
-  letter-spacing: -0.025em;
+  letter-spacing: var(--tracking-title);
   margin-bottom: 12px;
 }
 .mission p {
@@ -689,12 +712,8 @@ textarea:focus-visible {
   font-size: 12px;
 }
 .tools-section {
-  --foreground: #252c28;
-  --muted: #59675e;
-  --accent: var(--brand-accent);
-  --line: #252c2826;
   color: var(--foreground);
-  background: #eeeade;
+  background: var(--section-surface);
 }
 .tools-section .section-header {
   display: grid;
@@ -702,18 +721,6 @@ textarea:focus-visible {
   align-items: end;
   gap: 36px;
   margin-bottom: 36px;
-}
-.tools-section .section-header h2 {
-  font-size: clamp(42px, 5.5vw, 72px);
-  letter-spacing: -.06em;
-}
-.tools-section .section-header h2::after {
-  content: "";
-  display: inline-block;
-  width: .12em;
-  height: .12em;
-  background: var(--accent);
-  margin-left: .08em;
 }
 .tools-section .section-description {
   margin: 0;
@@ -726,7 +733,7 @@ textarea:focus-visible {
   background: #252c28;
   color: #eeeade;
   border: 1px solid #39433c;
-  border-radius: 16px;
+  border-radius: var(--radius-panel);
   overflow: hidden;
 }
 .skills-stack-heading {
@@ -787,7 +794,7 @@ textarea:focus-visible {
   height: 42px;
   background: #eeeade;
   border: 1px solid #eeeade;
-  border-radius: 12px;
+  border-radius: var(--radius-control);
 }
 .stack-logo img {
   width: 26px;
@@ -800,7 +807,7 @@ textarea:focus-visible {
   align-items: center;
   gap: 8px;
   color: inherit;
-  border-radius: 8px;
+  border-radius: var(--radius-control);
 }
 .stack-technology-link:hover strong {
   color: var(--accent);
@@ -847,8 +854,8 @@ textarea:focus-visible {
   width: 100%;
   padding: 30px 32px 24px;
   border: 1px solid var(--line);
-  border-radius: 16px;
-  background: #ffffff40;
+  border-radius: var(--radius-panel);
+  background: var(--surface);
   transition: border-color 300ms, box-shadow 400ms, transform 400ms var(--ease-out);
 }
 .domain-kicker {
@@ -880,15 +887,15 @@ textarea:focus-visible {
   height: 24px;
 }
 .skill-domain h3 {
-  font-size: clamp(24px, 2.5vw, 32px);
+  font-size: var(--type-card);
   font-weight: 500;
-  letter-spacing: -0.035em;
+  letter-spacing: var(--tracking-title);
   line-height: 1.2;
 }
 .domain-description {
   color: var(--muted);
-  font-size: 13px;
-  line-height: 1.8;
+  font-size: var(--type-body);
+  line-height: var(--leading-body);
   margin: 16px 0 0;
   max-width: 58ch;
 }
@@ -912,7 +919,7 @@ textarea:focus-visible {
   color: inherit;
   border: 1px solid var(--line);
   padding: 5px 9px;
-  border-radius: 6px;
+  border-radius: var(--radius-tag);
 }
 .domain-tools a {
   transition: border-color 200ms, background 200ms;
@@ -927,7 +934,7 @@ textarea:focus-visible {
   height: 16px;
   flex-shrink: 0;
   object-fit: contain;
-  color: #526a59;
+  color: var(--accent);
 }
 .skill-example {
   border-top: 1px solid var(--line);
@@ -1102,7 +1109,7 @@ textarea:focus-visible {
     padding: 24px;
   }
   .skill-domain h3 {
-    font-size: 22px;
+    font-size: var(--type-card);
   }
   .domain-slot {
     grid-column: span 6;
@@ -1428,14 +1435,13 @@ textarea:focus-visible {
 }
 @media (max-width: 767px) {
   .tools-section .section-header { grid-template-columns: 1fr; gap: 16px; margin-bottom: 28px; }
-  .tools-section .section-header h2 { font-size: 42px; }
   .skill-sketch { height: 145px; min-height: 145px; flex-basis: 145px; margin-block: 20px; }
   .domain-kicker { margin-bottom: 18px; }
   .skills-stack-heading { margin-bottom: 12px; }
   .skills-stack-heading > span { max-width: 27ch; }
 }
 .contact-section {
-  background: #ffffff02;
+  background: var(--background);
 }
 .contact-grid {
   display: grid;
@@ -1481,12 +1487,12 @@ textarea:focus-visible {
 .contact-panel {
   background: var(--surface);
   border: 1px solid var(--line);
-  border-radius: 4px;
+  border-radius: var(--radius-panel);
   padding: 32px;
 }
 .contact-panel h3 {
-  font-size: 22px;
-  letter-spacing: -0.03em;
+  font-size: var(--type-card);
+  letter-spacing: var(--tracking-title);
   font-weight: 500;
 }
 .form-intro {
@@ -1511,35 +1517,35 @@ textarea:focus-visible {
   gap: 8px;
 }
 .form-field label {
-  font-size: 11px;
-  color: #c7cfc9;
+  font-size: var(--type-small);
+  color: var(--muted);
 }
 .form-field input,
 .form-field textarea {
   min-width: 0;
   width: 100%;
-  background: #171b1b70;
-  border: 1px solid #ffffff20;
+  background: var(--input-background);
+  border: 1px solid var(--strong-line);
   color: var(--foreground);
-  border-radius: 6px;
+  border-radius: var(--radius-control);
   padding: 12px;
-  font-size: 13px;
+  font-size: var(--type-body);
   transition:
     border-color var(--motion-fast),
     background var(--motion-fast);
 }
 .form-field input::placeholder,
 .form-field textarea::placeholder {
-  color: #98a69d;
+  color: var(--muted);
 }
 .form-field input:hover,
 .form-field textarea:hover {
-  border-color: #ffffff40;
+  border-color: var(--muted);
 }
 .form-field input:focus,
 .form-field textarea:focus {
   border-color: var(--accent);
-  background: #171b1b;
+  background: var(--background);
 }
 .form-field textarea {
   resize: vertical;
@@ -1559,7 +1565,7 @@ textarea:focus-visible {
 }
 .form-feedback {
   font-size: 12px;
-  border-radius: 8px;
+  border-radius: var(--radius-control);
 }
 .form-feedback:not(:empty) {
   padding: 12px;
@@ -1816,7 +1822,7 @@ textarea:focus-visible {
     margin-bottom: 32px;
   }
   .section-header h2 {
-    font-size: 36px;
+    font-size: var(--type-section);
     max-width: 520px;
   }
   .section-description {
@@ -1914,8 +1920,8 @@ textarea:focus-visible {
   margin: 18px 0 0;
   padding-left: 18px;
   color: var(--muted);
-  font-size: 13px;
-  line-height: 1.8;
+  font-size: var(--type-body);
+  line-height: var(--leading-body);
   list-style: disc;
 }
 .mission-points li + li {
@@ -2030,7 +2036,7 @@ textarea:focus-visible {
   color: var(--accent);
   min-height: 44px;
   font-size: 13px;
-  border-bottom: 1px solid #ffae8640;
+  border-bottom: 1px solid color-mix(in srgb, var(--accent) 30%, transparent);
   transition: border-color var(--motion-fast);
 }
 .mascot-link:hover {
@@ -2079,7 +2085,8 @@ textarea:focus-visible {
     color-scheme: light;
     --background: #f6f2e9;
     --foreground: #252c28;
-    --surface: #ece8de;
+    --surface: #fcf9f2;
+    --section-surface: #eeeade;
     --muted: #59675e;
     --accent: var(--brand-accent);
     --cyan: #526a59;
@@ -2131,17 +2138,6 @@ textarea:focus-visible {
 }
 
 @media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) .tools-section {
-    --foreground: #f2eee5;
-    --muted: #acb5af;
-    --accent: var(--brand-accent);
-    --line: #ffffff16;
-    background: #1b2020;
-  }
-  :root:not([data-theme="light"]) .skill-domain {
-    border-color: var(--line);
-    background: #202525;
-  }
   :root:not([data-theme="light"]) .domain-icon,
   :root:not([data-theme="light"]) .domain-tools svg {
     color: var(--accent);
@@ -2162,7 +2158,8 @@ textarea:focus-visible {
   color-scheme: light;
   --background: #f6f2e9;
   --foreground: #252c28;
-  --surface: #ece8de;
+  --surface: #fcf9f2;
+  --section-surface: #eeeade;
   --muted: #59675e;
   --accent: var(--brand-accent);
   --cyan: #526a59;
@@ -2210,17 +2207,6 @@ textarea:focus-visible {
 }
 :root[data-theme="light"] .brand-dot {
   background: var(--accent);
-}
-:root[data-theme="dark"] .tools-section {
-  --foreground: #f2eee5;
-  --muted: #acb5af;
-  --accent: var(--brand-accent);
-  --line: #ffffff16;
-  background: #1b2020;
-}
-:root[data-theme="dark"] .skill-domain {
-  border-color: var(--line);
-  background: #202525;
 }
 :root[data-theme="dark"] .domain-icon,
 :root[data-theme="dark"] .domain-tools svg {
@@ -2271,7 +2257,7 @@ textarea:focus-visible {
   padding: 8px;
   background: var(--surface);
   border: 1px solid var(--strong-line);
-  border-radius: 10px;
+  border-radius: var(--radius-panel);
   box-shadow: 0 12px 32px #00000022;
   animation: preference-in var(--motion-fast) var(--ease-out);
 }
@@ -2289,7 +2275,7 @@ textarea:focus-visible {
   min-height: 44px;
   padding: 8px 10px;
   border: 0;
-  border-radius: 6px;
+  border-radius: var(--radius-control);
   background: transparent;
   color: var(--foreground);
   font-size: 12px;
@@ -2469,7 +2455,7 @@ textarea:focus-visible {
 .product-layers {
   position: relative;
   overflow: clip;
-  background: var(--surface);
+  background: var(--section-surface);
   border-block: 1px solid var(--line);
 }
 .layers-heading {
@@ -2483,14 +2469,14 @@ textarea:focus-visible {
   font-size: clamp(36px, 5vw, 64px);
   font-weight: 500;
   line-height: 1.05;
-  letter-spacing: -0.055em;
+  letter-spacing: var(--tracking-title);
 }
 .layers-heading h2 > span {
   color: var(--accent);
-  font-family: Georgia, serif;
-  font-style: italic;
-  letter-spacing: -0.045em;
-  font-weight: 400;
+  font-family: inherit;
+  font-style: normal;
+  letter-spacing: inherit;
+  font-weight: inherit;
 }
 .layers-heading > p {
   max-width: 240px;
@@ -2749,7 +2735,7 @@ textarea:focus-visible {
   gap: 4px;
   padding: 5px;
   border: 1px solid var(--strong-line);
-  border-radius: 100px;
+  border-radius: var(--radius-panel);
   background: var(--background);
 }
 .layers-tabs button {
@@ -2760,7 +2746,7 @@ textarea:focus-visible {
   flex: 1;
   min-height: 47px;
   border: 0;
-  border-radius: 100px;
+  border-radius: var(--radius-control);
   color: var(--muted);
   background: transparent;
   cursor: pointer;
@@ -2822,7 +2808,7 @@ textarea:focus-visible {
   font-size: 11px;
   padding: 4px 10px;
   border: 1px solid var(--strong-line);
-  border-radius: 4px;
+  border-radius: var(--radius-tag);
 }
 .layers-detail {
   display: flex;
