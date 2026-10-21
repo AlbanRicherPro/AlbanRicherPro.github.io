@@ -34,12 +34,16 @@ export default function Reveal({
   children,
   className = "",
   delay = 0,
+  as: Tag = "div",
+  variant = "rise",
 }: {
   children: ReactNode;
   className?: string;
   delay?: number;
+  as?: "div" | "li";
+  variant?: "rise" | "card";
 }) {
-  const ref = useRef<HTMLDivElement>(null);
+  const ref = useRef<HTMLElement>(null);
   useEffect(() => {
     const element = ref.current;
     if (!element || !("IntersectionObserver" in window)) return;
@@ -53,12 +57,18 @@ export default function Reveal({
       if (preference.matches) return;
       animation = element.animate(
         [
-          { opacity: 0, transform: "translateY(16px)" },
-          { opacity: 1, transform: "translateY(0)" },
+          {
+            opacity: 0,
+            transform:
+              variant === "card"
+                ? "perspective(900px) translateY(28px) rotateX(4deg) scale(.97)"
+                : "translateY(16px)",
+          },
+          { opacity: 1, transform: "none" },
         ],
         {
-          duration: 480,
-          delay: Math.min(delay, 240),
+          duration: variant === "card" ? 640 : 480,
+          delay: Math.min(delay, 400),
           easing: "cubic-bezier(0.22, 1, 0.36, 1)",
           fill: "backwards",
         },
@@ -69,10 +79,15 @@ export default function Reveal({
       animation?.cancel();
       preference.removeEventListener("change", stop);
     };
-  }, [delay]);
+  }, [delay, variant]);
   return (
-    <div ref={ref} className={className}>
+    <Tag
+      ref={(node: HTMLElement | null) => {
+        ref.current = node;
+      }}
+      className={className}
+    >
       {children}
-    </div>
+    </Tag>
   );
 }

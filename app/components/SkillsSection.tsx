@@ -195,8 +195,13 @@ export default function SkillsSection() {
               <span>{t("Développement, collaboration et livraison")}</span>
             </div>
             <ul className="stack-technologies">
-              {stack.map((technology) => (
-                <li key={technology.name}>
+              {stack.map((technology, index) => (
+                <Reveal
+                  as="li"
+                  variant="card"
+                  delay={80 + index * 60}
+                  key={technology.name}
+                >
                   <span className="stack-logo">
                     <Image
                       src={`/stack/${technology.logo}.svg`}
@@ -209,15 +214,17 @@ export default function SkillsSection() {
                     <strong>{t(technology.name)}</strong>
                     <small>{t(technology.role)}</small>
                   </span>
-                </li>
+                </Reveal>
               ))}
             </ul>
           </div>
         </Reveal>
         <div className="skills-domains">
-          {domains.map((domain) => (
+          {domains.map((domain, index) => (
             <Reveal
               key={domain.id}
+              variant="card"
+              delay={(index % 2) * 100}
               className={`domain-slot domain-slot-${domain.id}`}
             >
               <article className={`skill-domain skill-domain-${domain.id}`}>

@@ -3,7 +3,6 @@
 import useI18n from "./ui/useI18n";
 
 import Icon from "./ui/Icon";
-import Image from "next/image";
 import { useEffect, useRef } from "react";
 export default function Footer() {
   const { t } = useI18n();
@@ -61,11 +60,10 @@ export default function Footer() {
             </span>
             <p className="footer-made">
               {"Made with"}{" "}
-              <Image
-                src="/coeur-vendeen.svg"
-                alt={t("amour en Vendée")}
-                width={20}
-                height={22}
+              <span
+                className="footer-heart"
+                role="img"
+                aria-label={t("amour en Vendée")}
               />
             </p>
           </div>

@@ -1,6 +1,7 @@
 @import "tailwindcss";
 
 :root {
+  --brand-accent: #ffae86;
   color-scheme: dark;
   --header-background: #171b1beb;
   --strong-line: #ffffff30;
@@ -9,7 +10,7 @@
   --foreground: #f2eee5;
   --surface: #202525;
   --muted: #acb5af;
-  --accent: #ffae86;
+  --accent: var(--brand-accent);
   --cyan: #b6cbbd;
   --line: #ffffff16;
   --motion-fast: 160ms;
@@ -340,7 +341,7 @@ textarea:focus-visible {
   color: #222623;
 }
 .button-primary:hover:not(:disabled) {
-  background: #ffc6a8;
+  background: color-mix(in srgb, var(--accent) 75%, white);
 }
 .button-secondary {
   color: var(--foreground);
@@ -690,7 +691,7 @@ textarea:focus-visible {
 .tools-section {
   --foreground: #252c28;
   --muted: #59675e;
-  --accent: #a44322;
+  --accent: var(--brand-accent);
   --line: #252c2826;
   color: var(--foreground);
   background: #eeeade;
@@ -801,15 +802,6 @@ textarea:focus-visible {
   border: 1px solid #252c2824;
   border-radius: 4px;
   background: #ffffff28;
-}
-.skill-domain-frontend {
-  background: #dfe5d7;
-}
-.skill-domain-backend {
-  background: #e4e1d5;
-}
-.skill-domain-architecture {
-  background: #e4e1d5;
 }
 .domain-heading {
   display: flex;
@@ -1683,12 +1675,13 @@ textarea:focus-visible {
 /* Follow system preferences before JavaScript and on subsequent changes. */
 @media (prefers-color-scheme: light) {
   :root:not([data-theme="dark"]) {
+    --brand-accent: #e4895c;
     color-scheme: light;
     --background: #f6f2e9;
     --foreground: #252c28;
     --surface: #ece8de;
     --muted: #59675e;
-    --accent: #a44322;
+    --accent: var(--brand-accent);
     --cyan: #526a59;
     --line: #252c2826;
     --strong-line: #252c2838;
@@ -1725,15 +1718,15 @@ textarea:focus-visible {
     color: #252c28;
   }
   :root:not([data-theme="dark"]) .button-primary {
-    background: #ffae86;
+    background: var(--accent);
   }
   :root:not([data-theme="dark"]) .brand-mark span,
   :root:not([data-theme="dark"]) .hero-slash,
   :root:not([data-theme="dark"]) .hero-surname .accent {
-    color: #e4895c;
+    color: var(--accent);
   }
   :root:not([data-theme="dark"]) .brand-dot {
-    background: #e4895c;
+    background: var(--accent);
   }
 }
 
@@ -1741,7 +1734,7 @@ textarea:focus-visible {
   :root:not([data-theme="light"]) .tools-section {
     --foreground: #f2eee5;
     --muted: #acb5af;
-    --accent: #ffae86;
+    --accent: var(--brand-accent);
     --line: #ffffff16;
     background: #1b2020;
   }
@@ -1765,12 +1758,13 @@ textarea:focus-visible {
   }
 }
 :root[data-theme="light"] {
+  --brand-accent: #e4895c;
   color-scheme: light;
   --background: #f6f2e9;
   --foreground: #252c28;
   --surface: #ece8de;
   --muted: #59675e;
-  --accent: #a44322;
+  --accent: var(--brand-accent);
   --cyan: #526a59;
   --line: #252c2826;
   --strong-line: #252c2838;
@@ -1807,20 +1801,20 @@ textarea:focus-visible {
   color: #252c28;
 }
 :root[data-theme="light"] .button-primary {
-  background: #ffae86;
+  background: var(--accent);
 }
 :root[data-theme="light"] .brand-mark span,
 :root[data-theme="light"] .hero-slash,
 :root[data-theme="light"] .hero-surname .accent {
-  color: #e4895c;
+  color: var(--accent);
 }
 :root[data-theme="light"] .brand-dot {
-  background: #e4895c;
+  background: var(--accent);
 }
 :root[data-theme="dark"] .tools-section {
   --foreground: #f2eee5;
   --muted: #acb5af;
-  --accent: #ffae86;
+  --accent: var(--brand-accent);
   --line: #ffffff16;
   background: #1b2020;
 }
@@ -1982,19 +1976,22 @@ textarea:focus-visible {
   position: relative;
   z-index: 1;
 }
+.hero-visual {
+  isolation: isolate;
+}
 .hero-drafting {
   position: absolute;
   inset: 0;
+  z-index: -1;
   pointer-events: none;
-  overflow: hidden;
 }
 .hero-drafting::before {
   content: "";
   position: absolute;
   width: 800px;
   height: 800px;
-  right: -170px;
-  top: 0;
+  left: calc(50% - 400px);
+  top: calc(50% - 400px);
   background: radial-gradient(
     ellipse,
     color-mix(in srgb, var(--accent) 10%, transparent),
@@ -2009,8 +2006,8 @@ textarea:focus-visible {
   position: absolute;
   width: 760px;
   height: 760px;
-  top: 10px;
-  right: -220px;
+  top: calc(50% - 380px);
+  left: calc(50% - 380px);
   border: 1px solid color-mix(in srgb, var(--accent) 17%, transparent);
   border-radius: 50%;
   transform: rotate(-25deg) scaleX(0.7);
@@ -2018,21 +2015,21 @@ textarea:focus-visible {
 .orbit-two {
   width: 920px;
   height: 920px;
-  top: -70px;
-  right: -300px;
+  top: calc(50% - 460px);
+  left: calc(50% - 460px);
   border-style: dashed;
   opacity: 0.5;
 }
 .draft-slash {
   position: absolute;
-  font-size: clamp(600px, 80vw, 1100px);
+  font-size: 920px;
   font-weight: 200;
   line-height: 1;
-  right: 17%;
-  top: -110px;
+  left: 50%;
+  top: 50%;
   color: transparent;
   -webkit-text-stroke: 1px color-mix(in srgb, var(--accent) 12%, transparent);
-  transform: translateX(calc(var(--pointer-x) * -20px));
+  transform: translate(-62%, -50%) translateX(calc(var(--pointer-x) * -20px));
 }
 .hero .portrait-frame {
   transform: perspective(1000px) rotateY(calc(var(--pointer-x) * 7deg))
@@ -2133,7 +2130,7 @@ textarea:focus-visible {
   font-size: 22px;
   letter-spacing: -0.08em;
   font-weight: 600;
-  color: var(--muted);
+  color: var(--foreground);
 }
 .layer-axis > span {
   color: var(--accent);
@@ -2373,7 +2370,7 @@ textarea:focus-visible {
     color var(--motion-base);
 }
 .layers-tabs button[aria-selected="true"] {
-  color: var(--background);
+  color: #252c28;
   background: var(--accent);
 }
 .layers-tabs svg {
@@ -2496,17 +2493,7 @@ textarea:focus-visible {
     padding-bottom: 12px;
   }
   .draft-slash {
-    top: 120px;
-    right: -50px;
-    font-size: 800px;
-  }
-  .draft-orbit {
-    top: 650px;
-    right: -400px;
-  }
-  .orbit-two {
-    top: 570px;
-    right: -480px;
+    font-size: 740px;
   }
   .hero-approach-link {
     font-size: 11px;
@@ -2562,9 +2549,11 @@ textarea:focus-visible {
 }
 @media (prefers-reduced-motion: reduce) {
   .hero .portrait-frame,
-  .hero-drafting::before,
-  .draft-slash {
+  .hero-drafting::before {
     transform: none;
+  }
+  .draft-slash {
+    transform: translate(-62%, -50%);
   }
   .layer-plane,
   .layers-panel-content {
@@ -2589,6 +2578,8 @@ textarea:focus-visible {
 }
 .layers-pin {
   height: var(--layers-visible-height, auto);
+  display: flex;
+  align-items: center;
 }
 .layers-sticky {
   transform: scale(var(--layers-scale, 1));
@@ -2749,5 +2740,72 @@ textarea:focus-visible {
   }
   .layers-scene {
     transform: scale(0.33);
+  }
+}
+
+.footer-heart {
+  display: inline-block;
+  width: 20px;
+  height: 22px;
+  flex-shrink: 0;
+  background: var(--accent);
+  mask: url("/coeur-vendeen.svg") center / contain no-repeat;
+}
+.skill-example[open] .skill-example-content {
+  animation: skill-detail-in 320ms var(--ease-out) both;
+}
+@keyframes skill-detail-in {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* The approach sequence fills the space between the two fixed bars. */
+.product-layers {
+  scroll-margin-top: calc(var(--layers-top, 68px) - 100px);
+}
+.is-scroll-driven .layers-sticky {
+  min-height: var(--layers-stage-height);
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+}
+.layers-title,
+.layers-scroll-cue {
+  flex-shrink: 0;
+}
+.layers-body {
+  display: flex;
+  align-items: center;
+  flex: 1;
+}
+.layers-body .layers-studio {
+  width: 100%;
+}
+@media (min-width: 768px) {
+  .is-scroll-driven .layers-art {
+    height: clamp(310px, calc(var(--layers-stage-height) * 0.48), 480px);
+  }
+  .is-scroll-driven .layers-scene {
+    transform: scale(var(--layers-scene-scale, 0.76));
+  }
+  .is-scroll-driven .layers-panel h3 {
+    font-size: clamp(28px, calc(var(--layers-stage-height) * 0.035), 38px);
+  }
+  .is-scroll-driven .layers-panel p {
+    font-size: clamp(13px, calc(var(--layers-stage-height) * 0.015), 16px);
+  }
+  .is-scroll-driven .layers-heading h2 {
+    font-size: clamp(30px, calc(var(--layers-stage-height) * 0.06), 60px);
+  }
+}
+@media (max-width: 767px) {
+  .product-layers {
+    scroll-margin-top: calc(var(--layers-top, 60px) - 88px);
   }
 }

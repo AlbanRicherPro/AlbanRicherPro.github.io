@@ -71,30 +71,24 @@ export default function ProductLayers() {
     };
     const measure = () => {
       const top =
-        parseFloat(
-          getComputedStyle(document.documentElement).scrollPaddingTop,
-        ) || 100;
+        document.querySelector(".site-header")?.getBoundingClientRect()
+          .height ?? 68;
       const footer =
-        parseFloat(
-          getComputedStyle(document.documentElement).getPropertyValue(
-            "--footer-height",
-          ),
-        ) || 69;
-      // Fit the composition into the actual preview height, including fixed bars.
-      // A shorter viewport must not silently disable the scroll sequence.
+        document.querySelector(".site-footer")?.getBoundingClientRect()
+          .height ?? 57;
+      const available = Math.max(160, window.innerHeight - top - footer);
+      section.style.setProperty("--layers-stage-height", `${available}px`);
+      section.style.setProperty(
+        "--layers-scene-scale",
+        String(Math.min(1.12, Math.max(0.76, available / 850))),
+      );
+      // Fill the viewport; only shrink if the intrinsic content needs more room.
       const naturalHeight = content.offsetHeight;
-      const available = Math.max(160, window.innerHeight - top - footer - 12);
       const scale = Math.min(1, available / naturalHeight);
       const enabled = true;
       section.style.setProperty("--layers-scale", String(scale));
-      section.style.setProperty(
-        "--layers-visible-height",
-        `${naturalHeight * scale}px`,
-      );
-      section.style.setProperty(
-        "--layers-content-height",
-        `${naturalHeight * scale}px`,
-      );
+      section.style.setProperty("--layers-visible-height", `${available}px`);
+      section.style.setProperty("--layers-content-height", `${available}px`);
       const step = Math.max(320, window.innerHeight * 0.65);
       geometry.current = { enabled, top, step };
       section.style.setProperty("--layers-top", `${top}px`);
@@ -108,6 +102,10 @@ export default function ProductLayers() {
     };
     const observer = new ResizeObserver(measure);
     observer.observe(content);
+    const header = document.querySelector(".site-header");
+    const footer = document.querySelector(".site-footer");
+    if (header) observer.observe(header);
+    if (footer) observer.observe(footer);
     window.addEventListener("resize", measure);
     window.addEventListener("scroll", schedule, { passive: true });
     measure();
@@ -146,7 +144,7 @@ export default function ProductLayers() {
       <div className="layers-track">
         <div className="layers-pin">
           <div ref={sticky} className="container layers-sticky">
-            <div>
+            <div className="layers-title">
               <div className="layers-heading">
                 <h2>
                   {t("Du besoin")}
@@ -156,14 +154,14 @@ export default function ProductLayers() {
                 <p>{t("Un même produit. Trois regards complémentaires.")}</p>
               </div>
             </div>
-            <div>
+            <div className="layers-body">
               <div className="layers-studio" data-layer={active}>
                 <div className="layers-explorer">
                   <div className="layers-art" aria-hidden="true">
                     <div className="layers-scene">
                       <div className="layers-grid" />
                       <span className="layer-axis">
-                        a/r<span>.</span>
+                        a<span>/</span>r<span className="brand-dot" />
                       </span>
                       <div className="layer-plane plane-team">
                         <div className="plane-label">

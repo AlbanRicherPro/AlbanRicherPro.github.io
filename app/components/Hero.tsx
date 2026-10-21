@@ -13,11 +13,6 @@ export default function Hero() {
   return (
     <section id="home" tabIndex={-1} className="hero section-anchor">
       <div id="header-sentinel" aria-hidden="true" />
-      <div className="hero-drafting" aria-hidden="true">
-        <span className="draft-orbit orbit-one" />
-        <span className="draft-orbit orbit-two" />
-        <span className="draft-slash">/</span>
-      </div>
       <div className="container hero-grid">
         <div className="hero-copy">
           <h1 className="hero-enter">
@@ -64,6 +59,11 @@ export default function Hero() {
           </div>
         </div>
         <div className="hero-visual hero-enter">
+          <div className="hero-drafting" aria-hidden="true">
+            <span className="draft-orbit orbit-one" />
+            <span className="draft-orbit orbit-two" />
+            <span className="draft-slash">/</span>
+          </div>
           <div className="portrait-note" aria-hidden="true">
             <span>{t("Salut, c’est moi.")}</span>
             <svg width="92" height="58" viewBox="0 0 92 58" fill="none">
