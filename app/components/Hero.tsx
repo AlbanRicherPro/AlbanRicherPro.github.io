@@ -15,15 +15,27 @@ export default function Hero() {
       <div id="header-sentinel" aria-hidden="true" />
       <div className="container hero-grid">
         <div className="hero-copy">
-          <h1 className="hero-enter">
-            {"Alban"}
-            <span className="hero-slash accent" aria-hidden="true">
+          <h1 className="hero-enter" aria-label="Alban Richer">
+            <span data-intro-target="a" className="intro-target">
+              A
+            </span>
+            <span data-intro-rest>lban</span>
+            <span
+              className="hero-slash accent intro-target"
+              data-intro-target="slash"
+              aria-hidden="true"
+            >
               /
             </span>
             <br />
             <span className="hero-surname">
-              {"Richer"}
-              <span className="accent">.</span>
+              <span data-intro-target="r" className="intro-target">
+                R
+              </span>
+              <span data-intro-rest>icher</span>
+              <span className="accent intro-target" data-intro-target="dot">
+                .
+              </span>
             </span>
           </h1>
           <p className="hero-role hero-enter">

@@ -45,3 +45,5 @@ Le thème suit `prefers-color-scheme` (clair/sombre). La langue suit la premièr
 Les sélecteurs de la navigation permettent de choisir le thème (`Système`, `Clair`, `Sombre`) et la langue (`Navigateur`, `Français`, `English`). Les choix explicites sont conservés localement ; les modes automatiques rétablissent les préférences du système et du navigateur.
 
 Le favicon SVG (`app/icon.svg`) adapte son fond et ses lettres au thème clair/sombre du navigateur via `prefers-color-scheme`. Le favicon ICO sert de repli avec un fond sombre contrasté. Cette préférence suit l’interface du navigateur, indépendamment du thème choisi pour la page.
+
+L’arrivée sur l’accueil anime le logo vers le titre pendant environ 3 secondes, une fois par session d’onglet. Le fond suit le thème choisi. Les liens directs vers une autre section et les retours d’historique ouvrent directement le contenu ; un clic, une touche, le défilement ou un redimensionnement passe l’animation. La préférence de réduction des mouvements remplace les déplacements par un court fondu. Une temporisation de secours retire l’écran d’introduction si les polices ou l’hydratation échouent.

@@ -1,11 +1,22 @@
 "use client";
 
 import useI18n from "./ui/useI18n";
+import { useEffect, useRef } from "react";
 
 import Image from "next/image";
 import SectionHeader from "./ui/SectionHeader";
 import Reveal from "./ui/Reveal";
 import Icon, { type IconName } from "./ui/Icon";
+import SkillIllustration from "./SkillIllustration";
+
+const domainLabels: Record<string, string> = {
+  frontend: "L’interaction",
+  backend: "La logique métier",
+  leadership: "Le collectif",
+  architecture: "La fiabilité",
+  ai: "L’expérimentation",
+  mobile: "Au-delà du navigateur",
+};
 
 const stack = [
   { name: "Vue.js", role: "Interfaces", logo: "vue" },
@@ -15,6 +26,26 @@ const stack = [
   { name: "Docker", role: "Environnements", logo: "docker" },
   { name: "Claude Code", role: "Assistance au code", logo: "claude" },
 ];
+
+const technologySites: Record<string, string> = {
+  "Vue.js": "https://vuejs.org/",
+  TypeScript: "https://www.typescriptlang.org/",
+  Symfony: "https://symfony.com/",
+  "API Platform": "https://api-platform.com/",
+  PHP: "https://www.php.net/",
+  Vuetify: "https://vuetifyjs.com/",
+  Vite: "https://vite.dev/",
+  Flutter: "https://flutter.dev/",
+  Sentry: "https://sentry.io/",
+  ClickUp: "https://clickup.com/",
+  GitHub: "https://github.com/",
+  Docker: "https://www.docker.com/",
+  "GitHub Actions": "https://github.com/features/actions",
+  Cypress: "https://www.cypress.io/",
+  "Codex / ChatGPT": "https://openai.com/",
+  "Claude Code": "https://claude.com/product/claude-code",
+  Devin: "https://devin.ai/",
+};
 
 const toolPictograms: Record<string, { logo: string } | { icon: IconName }> = {
   "Vue.js": { logo: "vue" },
@@ -173,8 +204,22 @@ const additional = [
 
 export default function SkillsSection() {
   const { t } = useI18n();
+  const section = useRef<HTMLElement>(null);
+  useEffect(() => {
+    if (!section.current || !("IntersectionObserver" in window)) return;
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        (entry.target as HTMLElement).dataset.visible = "true";
+        observer.unobserve(entry.target);
+      });
+    }, { threshold: 0.25 });
+    section.current.querySelectorAll(".skill-sketch").forEach((sketch) => observer.observe(sketch));
+    return () => observer.disconnect();
+  }, []);
   return (
     <section
+      ref={section}
       id="skills"
       tabIndex={-1}
       className="section section-anchor tools-section"
@@ -191,7 +236,7 @@ export default function SkillsSection() {
         <Reveal>
           <div className="skills-stack">
             <div className="skills-stack-heading">
-              <h3>{t("Mes outils au quotidien")}</h3>
+              <h3><span aria-hidden="true">↳</span> {t("Mes outils au quotidien")}</h3>
               <span>{t("Développement, collaboration et livraison")}</span>
             </div>
             <ul className="stack-technologies">
@@ -202,18 +247,26 @@ export default function SkillsSection() {
                   delay={80 + index * 60}
                   key={technology.name}
                 >
-                  <span className="stack-logo">
-                    <Image
-                      src={`/stack/${technology.logo}.svg`}
-                      alt=""
-                      width={36}
-                      height={36}
-                    />
-                  </span>
-                  <span>
-                    <strong>{t(technology.name)}</strong>
-                    <small>{t(technology.role)}</small>
-                  </span>
+                  <a
+                    className="stack-technology-link"
+                    href={technologySites[technology.name]}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={`${technology.name}, ${t("nouvel onglet")}`}
+                  >
+                    <span className="stack-logo">
+                      <Image
+                        src={`/stack/${technology.logo}.svg`}
+                        alt=""
+                        width={36}
+                        height={36}
+                      />
+                    </span>
+                    <span>
+                      <strong>{t(technology.name)}</strong>
+                      <small>{t(technology.role)}</small>
+                    </span>
+                  </a>
                 </Reveal>
               ))}
             </ul>
@@ -228,6 +281,9 @@ export default function SkillsSection() {
               className={`domain-slot domain-slot-${domain.id}`}
             >
               <article className={`skill-domain skill-domain-${domain.id}`}>
+                <div className="domain-kicker">
+                  <span>{t(domainLabels[domain.id])}</span>
+                </div>
                 <div className="domain-heading">
                   <span className="domain-icon">
                     <Icon name={domain.icon} />
@@ -235,25 +291,37 @@ export default function SkillsSection() {
                   <h3>{t(domain.title)}</h3>
                 </div>
                 <p className="domain-description">{t(domain.description)}</p>
+                <SkillIllustration domain={domain.id} />
                 <ul
                   className="domain-tools"
                   aria-label={`${t("Outils et pratiques")} : ${t(domain.title)}`}
                 >
                   {domain.tools.map((tool) => {
                     const pictogram = toolPictograms[tool];
-                    return (
-                      <li key={tool}>
+                    const content = (
+                      <>
                         {"logo" in pictogram ? (
-                          <Image
-                            src={`/stack/${pictogram.logo}.svg`}
-                            alt=""
-                            width={16}
-                            height={16}
-                          />
+                          <Image src={`/stack/${pictogram.logo}.svg`} alt="" width={16} height={16} />
                         ) : (
                           <Icon name={pictogram.icon} />
                         )}
                         {t(tool)}
+                      </>
+                    );
+                    return (
+                      <li key={tool}>
+                        {technologySites[tool] ? (
+                          <a
+                            href={technologySites[tool]}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            aria-label={`${t(tool)}, ${t("nouvel onglet")}`}
+                          >
+                            {content}
+                          </a>
+                        ) : (
+                          <span>{content}</span>
+                        )}
                       </li>
                     );
                   })}
@@ -262,7 +330,7 @@ export default function SkillsSection() {
                   <summary
                     aria-label={`${t("Voir un exemple")} : ${t(domain.title)}`}
                   >
-                    {t("Voir un exemple")} <Icon name="arrow" />
+                    <span>{t("Voir un exemple")}</span><span className="domain-expand"><Icon name="arrow" /></span>
                   </summary>
                   <div className="skill-example-content">
                     <h4>{t(domain.exampleTitle)}</h4>

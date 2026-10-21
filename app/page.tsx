@@ -2,6 +2,7 @@
 
 import useI18n from "./components/ui/useI18n";
 
+import BrandIntro from "./components/BrandIntro";
 import BrowserPreferences from "./components/BrowserPreferences";
 import Navigation from "./components/Navigation";
 import Hero from "./components/Hero";
@@ -18,6 +19,7 @@ export default function Home() {
   return (
     <>
       <BrowserPreferences />
+      <BrandIntro />
       <a className="skip-link" href="#main">
         {t("Aller au contenu")}
       </a>
